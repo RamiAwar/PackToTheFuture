@@ -1,20 +1,20 @@
 extends Node
 
 
-export var CellSize: Vector2 = Vector2(32, 32);
+var CellSize: Vector2 = Vector2(32, 32);
 
 
 var WIDTH:int = 1024/CellSize.x	
 var HEIGHT:int = 1024/CellSize.y
 
 
-export (float) var max_iterations = 100000
-export (float) var walker_destroy_chance = 0.4
-export (float) var walker_change_chance = 0.4
-export (float) var walker_spawn_chance = 0.2
-export (int) var walker_max_streak = 4
-export (int) var walker_max_count = 3
-export (float) var max_fill_percent = 0.4
+var max_iterations = 100000
+var walker_destroy_chance = 0.4
+var walker_change_chance = 0.4
+var walker_spawn_chance = 0.2
+var walker_max_streak = 4
+var walker_max_count = 3
+var max_fill_percent = 0.4
 
 # Walker class (saves direction and position)
 class Walker:
@@ -41,7 +41,8 @@ var start_position:Vector2
 var character: KinematicBody2D;
 var house: StaticBody2D;
 var container: YSort;
-
+var shop: StaticBody2D;
+var food: Node2D
 
 func _ready():
 	
@@ -70,7 +71,14 @@ func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap):
 	dirt_tilemap = _dirt_tilemap
 	_setup();
 	_create_floor();
-	_create_walls();
+	_post_processing();
+	_spawn_tiles();
+	
+func _reset():
+	wall_tilemap.clear()
+	dirt_tilemap.clear()
+	_setup();
+	_create_floor();
 	_post_processing();
 	_spawn_tiles();
 	
@@ -137,14 +145,11 @@ func _create_floor():
 	
 	print(num_floors)
 	print(_iterations)
-		
 	
-func _create_walls():
-	pass
 	
 func _post_processing():
 	
-	# Clear tiles
+	# Clear tiles for house
 	for x in 4:
 		for y in 4:
 			grid[start_position.x -2 + x][start_position.y - 2 + y] = Tiles.floor;	
@@ -155,14 +160,77 @@ func _post_processing():
 #						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
 		
 			wall_tilemap.set_cellv(Vector2(start_position.x -2 + x, start_position.y - 2 + y), -1);
-						
-										
 	#dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
 	
 	# Set house	
 	house.global_position = start_position*CellSize + Vector2(CellSize.x/2, -CellSize.y)
 	
+	
+	# Clear single tiles?
+	# TBD
+	
+	# Get farthest node from start and place grocery store
+	var grid_copy = grid.duplicate(true)
+	var neighbors = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+	var bfs = []
+	var last_position = start_position
+	bfs.append(start_position);
+	
+	while !bfs.empty():
+		
+		var position = bfs.pop_front();
+		
+		# Check neighbors
+		for x in range(neighbors.size()):
+			var next = Vector2(position.x + neighbors[x][0], position.y + neighbors[x][1])
+			if next.x >= 1 and next.x < WIDTH-1 and next.y >= 1 and next.y < HEIGHT - 1 and grid_copy[next.x][next.y] != Tiles.empty:
+				last_position = next
+				bfs.append(next)
+			grid_copy[next.x][next.y] = Tiles.empty;
+			
+	# If too close to each other, regenerate
+	if (last_position - start_position).length() < 23:
+		_reset()
+		return
+	
+
+	
+	# Find fitting square
+	var size = 6
+	var top_left = last_position - Vector2(size, size)
+	
+	top_left.x = max(1, top_left.x)
+	top_left.y = max(1, top_left.y)
+	
+	var bottom_right = top_left + Vector2(size, size)
+	bottom_right.x = min(WIDTH-1, bottom_right.x)
+	bottom_right.y = min(HEIGHT-1, bottom_right.y)
+	
+	top_left = bottom_right - Vector2(size, size)
+	
+	
+	for x in size:
+		for y in size:
+			var next_pos = Vector2(top_left.x + x, top_left.y + y);
+			grid[next_pos.x][next_pos.y] = Tiles.floor;	
+
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
+		
+			wall_tilemap.set_cellv(Vector2(next_pos.x, next_pos.y), -1);
+	#dirt_tilemap.update_bitmask_region()
+	wall_tilemap.update_bitmask_region()
+	
+	# Set house	
+	shop.global_position = (top_left + Vector2(size/2, size-1))*CellSize
+	food.global_position = (top_left + Vector2(size/2, size-1))*CellSize + Vector2(0, 20)
+	
+	# Set arrow pointer
+	Globals.shop_position = shop.global_position
+
 func _spawn_tiles():
 	for x in WIDTH:
 		for y in HEIGHT:

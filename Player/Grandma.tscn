@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/grandma2.png" type="Texture" id=1]
 [ext_resource path="res://Player/Detective.gd" type="Script" id=2]
@@ -7,23 +7,6 @@
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.23157
 height = 10.7571
-
-[sub_resource type="Animation" id=2]
-resource_name = "Idle"
-loop = true
-step = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 2, 3, 4, 5, 6 ]
-}
 
 [sub_resource type="AnimationNodeAnimation" id=3]
 animation = "Idle"
@@ -53,7 +36,6 @@ rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 2 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 4 )

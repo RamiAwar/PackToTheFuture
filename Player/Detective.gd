@@ -27,9 +27,9 @@ onready var animation_state = animation_tree.get("parameters/playback")
 
 #onready var sword_hitbox = get_node("SwordPivot/SwordHitbox")
 
-onready var joystick_move: Joystick = $"../CanvasLayer/UI/Joystick";
-onready var attack_button: TouchScreenButton = $"../CanvasLayer/UI/Attack"
-onready var roll_button: TouchScreenButton = $"../CanvasLayer/UI/Roll";
+onready var joystick_move: Joystick = $"../../CanvasLayer/UI/Joystick";
+onready var attack_button: TouchScreenButton = $"../../CanvasLayer/UI/Attack"
+onready var roll_button: TouchScreenButton = $"../../CanvasLayer/UI/Roll";
 
 
 enum states {
@@ -72,8 +72,9 @@ func _process(delta):
 	else:	
 		input_vector = joystick_move.get_value()
 	
-	$Arrow.point_towards(Vector2(300, 300))
-
+	$Arrow.point_towards(Globals.shop_position)
+	print(Globals.shop_position)
+	
 	# State machine
 	match player_state:
 		states.MOVE:
