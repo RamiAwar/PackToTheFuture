@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grandma1.png-fdfc76c28e3b06e4a3f73a895b7a362c.stex"
+path="res://.import/grandma_arm.png-c8c2f0c8e99189df468c5747db90bcd5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/grandma1.png"
-dest_files=[ "res://.import/grandma1.png-fdfc76c28e3b06e4a3f73a895b7a362c.stex" ]
+source_file="res://Player/grandma_arm.png"
+dest_files=[ "res://.import/grandma_arm.png-c8c2f0c8e99189df468c5747db90bcd5.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

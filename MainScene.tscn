@@ -76,7 +76,7 @@ position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 1.2, 1.2 )
+zoom = Vector2( 6, 6 )
 limit_left = 0
 limit_top = 0
 limit_right = 1024

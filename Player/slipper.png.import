@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grandma2.png-58eaedd6d8420aebcb02f3fba2acc6b8.stex"
+path="res://.import/slipper.png-f1f66f42fdfff5230d3908e90171c293.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/grandma2.png"
-dest_files=[ "res://.import/grandma2.png-58eaedd6d8420aebcb02f3fba2acc6b8.stex" ]
+source_file="res://Player/slipper.png"
+dest_files=[ "res://.import/slipper.png-f1f66f42fdfff5230d3908e90171c293.stex" ]
 
 [params]
 

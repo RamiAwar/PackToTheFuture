@@ -16,7 +16,7 @@ func _ready():
 	
 func _physics_process(delta):
 	
-	var target: Vector2 = get_viewport().get_mouse_position() - global_position
+	var target: Vector2 = get_global_mouse_position() - global_position
 	angle = atan2(target.y, abs(target.x))
 
 	if target.x < 0:
