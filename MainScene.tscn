@@ -56,15 +56,14 @@ normal = ExtResource( 2 )
 pressed = ExtResource( 1 )
 script = ExtResource( 11 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 512, 408 )
+[node name="Detective" parent="." instance=ExtResource( 9 )]
+position = Vector2( 48, 56 )
+
+[node name="Camera2D" type="Camera2D" parent="Detective"]
 current = true
-zoom = Vector2( 6, 6 )
+zoom = Vector2( 1.2, 1.2 )
 limit_left = 0
 limit_top = 0
 limit_right = 1024
 limit_bottom = 1024
 editor_draw_limits = true
-
-[node name="Detective" parent="." instance=ExtResource( 9 )]
-position = Vector2( 48, 56 )

@@ -124,6 +124,7 @@ func _create_walls():
 	pass
 	
 func _post_processing():
+	
 	pass
 
 func _spawn_tiles(wall_tilemap : TileMap, dirt_tilemap:TileMap):
@@ -134,11 +135,11 @@ func _spawn_tiles(wall_tilemap : TileMap, dirt_tilemap:TileMap):
 				match tile_index:
 					
 					Tiles.floor:
-						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
-
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
+						pass
 			else:
 				wall_tilemap.set_cellv(Vector2(x, y), 0);
 						

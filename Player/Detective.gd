@@ -71,6 +71,8 @@ func _process(delta):
 	# Else get virtual joystick input
 	else:	
 		input_vector = joystick_move.get_value()
+	
+	$Arrow.point_towards(Vector2(300, 300))
 
 	# State machine
 	match player_state:

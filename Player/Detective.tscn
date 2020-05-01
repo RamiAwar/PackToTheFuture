@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Player/detective_idle_cigarette.png" type="Texture" id=1]
+[ext_resource path="res://Player/grandma2.png" type="Texture" id=1]
 [ext_resource path="res://Player/Detective.gd" type="Script" id=2]
+[ext_resource path="res://Player/Arrow.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 2.23157
@@ -37,14 +38,14 @@ start_node = "Idle"
 [node name="Detective" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
+[node name="Arrow" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -33.417 )
+
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 5.86581 )
-scale = Vector2( 1.38099, 1.36661 )
+scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 centered = false
-offset = Vector2( -32, -52.3 )
-hframes = 7
-frame = 2
+offset = Vector2( -16, -32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.0987473, -2.20247 )
