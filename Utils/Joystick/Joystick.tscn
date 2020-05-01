@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Utils/Joystick/sphere.png" type="Texture" id=1]
+[ext_resource path="res://Utils/Joystick/boundary.png" type="Texture" id=2]
+[ext_resource path="res://Utils/Joystick/JoystickButton.gd" type="Script" id=3]
+[ext_resource path="res://Utils/Joystick/Joystick.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 17.0
+
+[node name="Joystick" type="Sprite"]
+self_modulate = Color( 1, 1, 1, 0.0941176 )
+texture = ExtResource( 2 )
+script = ExtResource( 5 )
+
+[node name="JoystickButton" type="TouchScreenButton" parent="."]
+position = Vector2( -4.24127, -4.24127 )
+scale = Vector2( 0.843641, 0.843641 )
+normal = ExtResource( 1 )
+pressed = ExtResource( 1 )
+shape = SubResource( 1 )
+script = ExtResource( 3 )
+DeadZone = 10.0

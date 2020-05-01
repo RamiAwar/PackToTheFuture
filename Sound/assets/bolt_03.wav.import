@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bolt_03.wav-fad86a0b0d0b55a04e4024db9f7eb3a9.sample"
+
+[deps]
+
+source_file="res://Sound/assets/bolt_03.wav"
+dest_files=[ "res://.import/bolt_03.wav-fad86a0b0d0b55a04e4024db9f7eb3a9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

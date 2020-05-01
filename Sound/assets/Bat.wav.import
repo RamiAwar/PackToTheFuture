@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Bat.wav-71a8b94d6032e041ec57261027cde275.sample"
+
+[deps]
+
+source_file="res://Sound/assets/Bat.wav"
+dest_files=[ "res://.import/Bat.wav-71a8b94d6032e041ec57261027cde275.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

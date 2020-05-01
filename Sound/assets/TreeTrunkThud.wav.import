@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TreeTrunkThud.wav-b667fba69a9ce87f5b0984f7e5d2b5e7.sample"
+
+[deps]
+
+source_file="res://Sound/assets/TreeTrunkThud.wav"
+dest_files=[ "res://.import/TreeTrunkThud.wav-b667fba69a9ce87f5b0984f7e5d2b5e7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

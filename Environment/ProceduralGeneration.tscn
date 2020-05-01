@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Environment/ProceduralGeneration.gd" type="Script" id=1]
+[ext_resource path="res://Environment/OpenSimplexNoiseGeneration.gd" type="Script" id=2]
+
+[node name="Node" type="Node"]
+script = ExtResource( 1 )
+walker_destroy_chance = 0.1
+walker_change_chance = 0.4
+walker_spawn_chance = 0.1
+walker_max_streak = 2
+walker_max_count = 5
+max_fill_percent = 0.4
+
+[node name="OpenSimplexNoiseGeneration" type="Node" parent="."]
+script = ExtResource( 2 )

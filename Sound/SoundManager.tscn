@@ -1,0 +1,68 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sound/assets/Whoosh-master.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sound/SoundManager.gd" type="Script" id=2]
+[ext_resource path="res://Sound/assets/Squish.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sound/assets/BatDeath.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sound/assets/Shrub.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sound/assets/Bush.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sound/assets/Tree.wav" type="AudioStream" id=7]
+[ext_resource path="res://Sound/assets/TreeTrunkCreak.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sound/assets/TreeTrunkThud2.wav" type="AudioStream" id=9]
+[ext_resource path="res://Sound/assets/coin_a_01.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sound/RandomSound.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Sound/assets/coin_a_03.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sound/assets/coin_c_02.wav" type="AudioStream" id=13]
+
+[node name="SoundManager" type="Node"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="Player" type="Node" parent="."]
+
+[node name="Attack" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 1 )
+volume_db = -16.0
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="BatHit" type="AudioStreamPlayer" parent="Enemies"]
+stream = ExtResource( 3 )
+
+[node name="BatDeath" type="AudioStreamPlayer" parent="Enemies"]
+stream = ExtResource( 4 )
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="Shrub" type="AudioStreamPlayer" parent="Objects"]
+stream = ExtResource( 5 )
+volume_db = -25.0
+
+[node name="Bush" type="AudioStreamPlayer" parent="Objects"]
+stream = ExtResource( 6 )
+volume_db = -6.0
+
+[node name="Tree" type="AudioStreamPlayer" parent="Objects"]
+stream = ExtResource( 7 )
+volume_db = -6.0
+
+[node name="TreeTrunkCreak" type="AudioStreamPlayer" parent="Objects"]
+stream = ExtResource( 8 )
+volume_db = -7.0
+
+[node name="TreeTrunkThud" type="AudioStreamPlayer" parent="Objects"]
+stream = ExtResource( 9 )
+volume_db = -1.0
+
+[node name="Coin" type="Node" parent="Objects"]
+
+[node name="CoinRandom" parent="Objects/Coin" instance=ExtResource( 11 )]
+
+[node name="Coin1" type="AudioStreamPlayer" parent="Objects/Coin"]
+stream = ExtResource( 10 )
+
+[node name="Coin3" type="AudioStreamPlayer" parent="Objects/Coin"]
+stream = ExtResource( 12 )
+
+[node name="Coin2" type="AudioStreamPlayer" parent="Objects/Coin"]
+stream = ExtResource( 13 )
