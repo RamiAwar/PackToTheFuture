@@ -1,9 +1,15 @@
 extends Node2D
 
+export (PackedScene) var Character;
+export (PackedScene) var House;
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	ProceduralGeneration.character = $YSort/Grandma
+	ProceduralGeneration.house = $YSort/House
+	ProceduralGeneration.container = $YSort
+	
 	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap)
 	pass
 	

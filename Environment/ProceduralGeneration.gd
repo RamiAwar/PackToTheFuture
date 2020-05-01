@@ -29,8 +29,19 @@ const Tiles = {
 	'empty': -1
 }
 	
+var wall_tilemap : TileMap
+var dirt_tilemap: TileMap
+	
 var grid :Array = []
 var walkers: Array = []
+
+var start_position:Vector2
+
+
+var character: KinematicBody2D;
+var house: StaticBody2D;
+var container: YSort;
+
 
 func _ready():
 	
@@ -44,16 +55,24 @@ func _setup():
 	var walker = Walker.new();
 	walker.dir = Random.RandomDirection();
 	walker.prev_dir = walker.dir
-	walker.pos = Vector2(1, 1);
+	walker.pos = Vector2(Random.rng.randi()%(WIDTH - 6) + 3, Random.rng.randi()%(HEIGHT - 6) + 3);
 	walkers.append(walker);
 	
+	# Set grandma position
+
+	character.global_position = walker.pos*CellSize 
+	start_position = walker.pos
 	
-func _generate_world(wall_tilemap : TileMap, dirt_tilemap: TileMap):
+	character.global_position.x += CellSize.x/2
+	
+func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap):
+	wall_tilemap = _wall_tilemap
+	dirt_tilemap = _dirt_tilemap
 	_setup();
 	_create_floor();
 	_create_walls();
 	_post_processing();
-	_spawn_tiles(wall_tilemap, dirt_tilemap);
+	_spawn_tiles();
 	
 func _create_floor():
 	
@@ -125,9 +144,26 @@ func _create_walls():
 	
 func _post_processing():
 	
-	pass
+	# Clear tiles
+	for x in 4:
+		for y in 4:
+			grid[start_position.x -2 + x][start_position.y - 2 + y] = Tiles.floor;	
 
-func _spawn_tiles(wall_tilemap : TileMap, dirt_tilemap:TileMap):
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
+		
+			wall_tilemap.set_cellv(Vector2(start_position.x -2 + x, start_position.y - 2 + y), -1);
+						
+										
+	#dirt_tilemap.update_bitmask_region()
+	wall_tilemap.update_bitmask_region()
+	
+	# Set house	
+	house.global_position = start_position*CellSize + Vector2(CellSize.x/2, -CellSize.y)
+	
+func _spawn_tiles():
 	for x in WIDTH:
 		for y in HEIGHT:
 			var tile_index = grid[x][y];		
@@ -144,7 +180,7 @@ func _spawn_tiles(wall_tilemap : TileMap, dirt_tilemap:TileMap):
 				wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
 										
-	dirt_tilemap.update_bitmask_region()
+	#dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
 
 	
