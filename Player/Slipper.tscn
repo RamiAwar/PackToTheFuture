@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Player/slipper.png" type="Texture" id=1]
 [ext_resource path="res://Player/Slipper.gd" type="Script" id=2]
 [ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=4]
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 9.24449
+
 [sub_resource type="Animation" id=1]
 resource_name = "airborne"
-length = 0.6
+length = 0.4
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Body:rotation_degrees")
@@ -16,39 +19,47 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.0, -360.0 ]
 }
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 8.57296
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 5.15441
+height = 1.21499
 
 [node name="Slipper" type="KinematicBody2D"]
 position = Vector2( 0, -11.8085 )
 collision_layer = 0
 script = ExtResource( 2 )
 
+[node name="Shadow" type="Sprite" parent="."]
+position = Vector2( 0, 11.5723 )
+scale = Vector2( 1.23617, 1.23617 )
+texture = ExtResource( 4 )
+
 [node name="Body" type="Sprite" parent="."]
-rotation = 2.0944
+rotation = -1.5708
 scale = Vector2( 1, 1 )
 texture = ExtResource( 1 )
-offset = Vector2( -0.56, -1.406 )
+offset = Vector2( -0.56, -1.402 )
 
 [node name="Hitbox" parent="Body" instance=ExtResource( 3 )]
 rotation = -2.0944
 scale = Vector2( 1, 1 )
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="Body/Hitbox" index="0"]
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/airborne = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.434017, 0.781231 )
-rotation = 1.09258
-shape = SubResource( 2 )
+position = Vector2( 0, 10.5627 )
+rotation = -1.5708
+shape = SubResource( 3 )
 
-[node name="Shadow" type="Sprite" parent="."]
-position = Vector2( 0, 11.5723 )
-scale = Vector2( 1.23617, 1.23617 )
-texture = ExtResource( 4 )
+[editable path="Body/Hitbox"]

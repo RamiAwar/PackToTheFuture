@@ -9,10 +9,10 @@
 [ext_resource path="res://Sound/assets/Tree.wav" type="AudioStream" id=7]
 [ext_resource path="res://Sound/assets/TreeTrunkCreak.wav" type="AudioStream" id=8]
 [ext_resource path="res://Sound/assets/TreeTrunkThud2.wav" type="AudioStream" id=9]
-[ext_resource path="res://Sound/assets/coin_a_01.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sound/assets/boomerang_effect.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sound/RandomSound.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Sound/assets/coin_a_03.wav" type="AudioStream" id=12]
-[ext_resource path="res://Sound/assets/coin_c_02.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sound/assets/boomerang_effect_2.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sound/assets/slap.wav" type="AudioStream" id=13]
 
 [node name="SoundManager" type="Node"]
 pause_mode = 2
@@ -54,15 +54,23 @@ volume_db = -7.0
 stream = ExtResource( 9 )
 volume_db = -1.0
 
-[node name="Coin" type="Node" parent="Objects"]
+[node name="Slipper" type="Node" parent="Objects"]
 
-[node name="CoinRandom" parent="Objects/Coin" instance=ExtResource( 11 )]
+[node name="SlipperRandom" parent="Objects/Slipper" instance=ExtResource( 11 )]
 
-[node name="Coin1" type="AudioStreamPlayer" parent="Objects/Coin"]
+[node name="Slipper1" type="AudioStreamPlayer" parent="Objects/Slipper"]
 stream = ExtResource( 10 )
 
-[node name="Coin3" type="AudioStreamPlayer" parent="Objects/Coin"]
+[node name="Slipper2" type="AudioStreamPlayer" parent="Objects/Slipper"]
 stream = ExtResource( 12 )
 
-[node name="Coin2" type="AudioStreamPlayer" parent="Objects/Coin"]
+[node name="Slipper3" type="AudioStreamPlayer" parent="Objects/Slipper"]
+stream = ExtResource( 10 )
+
+[node name="Wall" type="Node" parent="Objects"]
+
+[node name="WallRandom" parent="Objects/Wall" instance=ExtResource( 11 )]
+number_of_samples = 1
+
+[node name="WallHit1" type="AudioStreamPlayer" parent="Objects/Wall"]
 stream = ExtResource( 13 )

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/boomerang_effect_2.wav-75782ac803294a85c037c325bf2d5a20.sample"
+
+[deps]
+
+source_file="res://Sound/assets/boomerang_effect_2.wav"
+dest_files=[ "res://.import/boomerang_effect_2.wav-75782ac803294a85c037c325bf2d5a20.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

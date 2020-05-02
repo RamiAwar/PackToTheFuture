@@ -13,6 +13,7 @@ export (int) var minimum_velocity_threshold = 5
 
 func _ready():
 	#call_deferred("set_process", false)
+	SoundManager.get_node("Objects/Slipper/SlipperRandom").play(true)
 	pass
 	
 func initialize(direction, jump_velocity):
@@ -29,15 +30,17 @@ func _physics_process(delta):
 		var collision =  move_and_collide(bullet_velocity*delta)
 		#position += bullet_velocity*delta;
 		if collision:
-			bullet_velocity = 0.5*bullet_velocity.bounce(collision.normal)
+			$AnimationPlayer.stop()
+			bullet_velocity = Vector2.DOWN
 			gravity = true
-		
-		shadow_velocity = bullet_velocity
-		
+			if collision.collider.is_in_group("world"):
+				SoundManager.get_node("Objects/Wall/WallRandom").play()
 	else:
-		
-		apply_gravity(delta)
-	
+		$Body.position += bullet_velocity;
+		if $Body.position.y >= $Shadow.position.y - 4:
+			bullet_velocity = Vector2.ZERO
+			set_physics_process(false)
+			
 
 	
 func apply_gravity(delta):
@@ -53,7 +56,7 @@ func apply_gravity(delta):
 #		else:
 #			bullet_velocity = 0.5*bullet_velocity.bounce(Vector2.UP);
 
-#		bullet_velocity.y += GRAVITY * delta;
+		bullet_velocity.y += GRAVITY * delta;
 #
 		$Body.position += Vector2(0, bullet_velocity.y*delta);
 		position += shadow_velocity;

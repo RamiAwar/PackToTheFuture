@@ -45,8 +45,9 @@ func trigger(angle):
 	var jump_velocity = Random.rng.randf_range(150, 300);
 	
 	particle.initialize(random_direction, jump_velocity);
-	$Node.call_deferred("add_child", particle)
+	$"/root/root/YSort".call_deferred("add_child", particle)
 
+	
 func set_center(value):
 	center = value
 	update()

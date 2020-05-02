@@ -307,6 +307,7 @@ func _remove_diagonals(tile_index):
 			# Check if on edges
 			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT-1:
 				continue
+				
 			# If not on edges, make sure all surrounding tiles are floor and this is wall
 			var position = Vector2(x, y);
 			if grid[position.x][position.y] == tile_index:

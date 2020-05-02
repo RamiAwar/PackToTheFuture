@@ -87,6 +87,7 @@ start_node = "Idle"
 
 [node name="SlipperGun" type="Node2D"]
 position = Vector2( 120, 80 )
+z_as_relative = false
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]

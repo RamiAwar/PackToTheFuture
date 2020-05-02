@@ -21,7 +21,7 @@ func _ready():
 #	var target: Vector2 = (get_global_mouse_position() - global_position).normalized()
 #	draw_circle(Vector2.ZERO, 4, Color(1, 0, 0, 1))
 #	draw_line(Vector2.ZERO, target, Color(1, 0, 0, 1))
-#
+
 func _physics_process(delta):
 	
 	target = (get_global_mouse_position() - global_position).normalized()

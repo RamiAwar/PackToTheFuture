@@ -43,7 +43,7 @@
 0/shapes = [  ]
 0/z_index = 0
 
-[node name="Node2D" type="Node2D"]
+[node name="root" type="Node2D"]
 script = ExtResource( 7 )
 walker_destroy_chance = 0.415
 
@@ -54,17 +54,23 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 1024, 1024 )
 region_filter_clip = true
 
-[node name="WallTileMap" type="TileMap" parent="."]
+[node name="WallTileMap" type="TileMap" parent="." groups=[
+"world",
+]]
 tile_set = ExtResource( 5 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
-[node name="DirtTileMap" type="TileMap" parent="."]
+[node name="DirtTileMap" type="TileMap" parent="." groups=[
+"world",
+]]
 tile_set = ExtResource( 10 )
 cell_size = Vector2( 16, 16 )
 format = 1
 
-[node name="DebugTileMap" type="TileMap" parent="."]
+[node name="DebugTileMap" type="TileMap" parent="." groups=[
+"world",
+]]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -101,9 +107,13 @@ visible = false
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="House" parent="YSort" instance=ExtResource( 12 )]
+[node name="House" parent="YSort" groups=[
+"world",
+] instance=ExtResource( 12 )]
 
-[node name="Shop" parent="YSort" instance=ExtResource( 13 )]
+[node name="Shop" parent="YSort" groups=[
+"world",
+] instance=ExtResource( 13 )]
 position = Vector2( 96, 0 )
 
 [node name="Food" parent="YSort" instance=ExtResource( 14 )]
@@ -115,7 +125,7 @@ position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 1.5, 1.5 )
+zoom = Vector2( 6, 6 )
 limit_left = 0
 limit_top = 0
 limit_right = 1024

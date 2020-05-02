@@ -100,6 +100,12 @@ func MoveState(delta):
 		player_velocity = player_velocity.move_toward(input_vector.normalized() * MAX_VELOCITY, ACCELERATION * delta)	
 		last_input = input_vector
 		
+#		if input_vector.x < 0:
+#			$Sprite.flip_h = true
+#
+#		else:
+#			$Sprite.flip_h = false
+		
 		# Time delay before starting to animate
 #		if player_velocity.length() > 20:
 #			animation_state.travel("Run")
