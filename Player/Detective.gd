@@ -20,6 +20,8 @@ var player_state = states.MOVE
 var input_vector = Vector2.DOWN
 var last_input = Vector2.DOWN
 
+var groceries = false
+
 onready var vsize = get_viewport_rect().size
 onready var animation_player = get_node("AnimationPlayer")
 onready var animation_tree = get_node("AnimationTree")
@@ -35,6 +37,10 @@ onready var roll_button: TouchScreenButton = $"../../CanvasLayer/UI/Roll";
 enum states {
 	MOVE
 }
+
+
+func _reset():
+	groceries = false
 
 		
 func _ready():
@@ -193,5 +199,12 @@ func UpdateBlendSpaces():
 
 
 func _on_GroceryHurtbox_area_entered(area):
+	groceries = true
 	GameManager.got_groceries()
 
+
+
+func _on_GoalHurtbox_area_entered(area):
+	if groceries:
+		_reset()
+		GameManager.end_day()

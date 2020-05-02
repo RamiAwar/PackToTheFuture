@@ -16,6 +16,7 @@ func _ready():
 	SoundManager.get_node("Objects/Slipper/SlipperRandom").play(true)
 	pass
 	
+	
 func initialize(direction, jump_velocity):
 	bullet_velocity = direction*MAX_SPEED;
 	

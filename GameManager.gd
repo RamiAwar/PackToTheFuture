@@ -13,7 +13,8 @@ var has_groceries:bool = false
 var boss: Control
 
 
-
+func end_day():
+	ProceduralGeneration._reset();
 
 func get_arrow():
 	if has_groceries:
