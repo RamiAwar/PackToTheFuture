@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Utils/Joystick/pressed_roll.png" type="Texture" id=1]
 [ext_resource path="res://Utils/Joystick/unpressed_roll.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://UI/BossScreen.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Environment/RandomPlacer.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Environment/empty32.png" type="Texture" id=19]
+[ext_resource path="res://NPCs/SmartMan.tscn" type="PackedScene" id=20]
 
 [sub_resource type="TileSet" id=1]
 0/name = "debug_tile.png 0"
@@ -106,7 +107,9 @@ tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
-[node name="InvisibleTileMap" type="TileMap" parent="."]
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="InvisibleTileMap" type="TileMap" parent="Navigation2D"]
 tile_set = SubResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -155,6 +158,13 @@ foodA = ExtResource( 14 )
 "world",
 ] instance=ExtResource( 13 )]
 position = Vector2( 96, 0 )
+
+[node name="SmartMan" parent="YSort" instance=ExtResource( 20 )]
+position = Vector2( 211.771, 149.054 )
+
+[node name="Food" parent="YSort" instance=ExtResource( 14 )]
+position = Vector2( 24, 32 )
+scale = Vector2( 0.8, 0.8 )
 
 [node name="Grandma" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 56, 56 )

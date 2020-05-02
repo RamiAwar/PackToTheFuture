@@ -93,6 +93,7 @@ func _process(delta):
 # Physics handling
 func _physics_process(delta):
 	player_velocity = move_and_slide(player_velocity)
+	GameManager.granny_position = global_position
 
 
 func MoveState(delta):
