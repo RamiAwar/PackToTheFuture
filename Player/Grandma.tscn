@@ -10,17 +10,17 @@
 radius = 2.23157
 height = 10.7571
 
-[sub_resource type="AnimationNodeAnimation" id=3]
+[sub_resource type="AnimationNodeAnimation" id=2]
 animation = "Idle"
 
-[sub_resource type="AnimationNodeStateMachine" id=4]
-states/Idle/node = SubResource( 3 )
+[sub_resource type="AnimationNodeStateMachine" id=3]
+states/Idle/node = SubResource( 2 )
 states/Idle/position = Vector2( 253, 150.2 )
 start_node = "Idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
 
-[sub_resource type="CapsuleShape2D" id=6]
+[sub_resource type="CapsuleShape2D" id=5]
 radius = 11.4393
 height = 5.36532
 
@@ -49,9 +49,9 @@ shape = SubResource( 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 4 )
+tree_root = SubResource( 3 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 5 )
+parameters/playback = SubResource( 4 )
 
 [node name="GroceryHurtbox" parent="." instance=ExtResource( 5 )]
 collision_layer = 32
@@ -59,7 +59,7 @@ collision_mask = 0
 
 [node name="CollisionShape" parent="GroceryHurtbox" index="0"]
 position = Vector2( -3.8147e-06, -11.4581 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 [connection signal="area_entered" from="GroceryHurtbox" to="." method="_on_GroceryHurtbox_area_entered"]
 
 [editable path="GroceryHurtbox"]
