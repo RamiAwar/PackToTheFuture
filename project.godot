@@ -32,6 +32,7 @@ SoundManager="*res://Sound/SoundManager.tscn"
 Random="*res://Utils/Random.tscn"
 ProceduralGeneration="*res://Environment/ProceduralGeneration.tscn"
 Globals="*res://Globals.tscn"
+GameManager="*res://GameManager.tscn"
 
 [display]
 
@@ -86,8 +87,13 @@ roll={
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
+2d_physics/layer_4="PlayerHurtbox"
+2d_physics/layer_5="EnemyHurtbox"
+2d_physics/layer_6="Grocery"
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
+quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

@@ -147,22 +147,15 @@ func _create_floor():
 		
 		_iterations += 1;
 
-	
-	
+
+			
 func _post_processing():
 	
-	# Clear tiles for house
 	var size = 6
-	var top_left = _find_best_fit(size, start_position)
-	
-	for x in size:
-		for y in size:
-			var next_pos = Vector2(top_left.x + x, top_left.y + y);
-			grid[next_pos.x][next_pos.y] = Tiles.floor
-	
+	var house_top_left = _place_house(start_position, size);
 	# Set house	
-	house.global_position = (top_left + Vector2(size/2, 2))*CellSize
-	character.global_position = (top_left + Vector2(size/2, 2.5))*CellSize 
+	house.global_position = (house_top_left + Vector2(size/2, 2))*CellSize
+	character.global_position = (house_top_left + Vector2(size/2, 2.5))*CellSize 
 	
 	# Get farthest node from start and place grocery store
 	var grid_copy = grid.duplicate(true)
@@ -192,17 +185,11 @@ func _post_processing():
 	# TODO: Refactor into function find best rect(size)
 	# Find fitting square
 	size = 6
-	top_left = _find_best_fit(size, last_position)
+	var shop_top_left = _place_house(last_position, size);
 	
-	for x in size:
-		for y in size:
-			var next_pos = Vector2(top_left.x + x, top_left.y + y);
-			grid[next_pos.x][next_pos.y] = Tiles.floor
-
-
 	# Set SHOP	
-	shop.global_position = (top_left + Vector2(size/2, 2))*CellSize
-	food.global_position = (top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20)
+	shop.global_position = (shop_top_left + Vector2(size/2, 2))*CellSize
+	food.global_position = (shop_top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20)
 	
 	# Set arrow pointer
 	Globals.shop_position = shop.global_position
@@ -369,4 +356,12 @@ func _find_best_fit(size:int, position:Vector2):
 	
 	return top_left
 	
+func _place_house(position, size):
+	# Clear tiles for house
+	var top_left = _find_best_fit(size, position)
+	for x in size:
+		for y in size:
+			var next_pos = Vector2(top_left.x + x, top_left.y + y);
+			grid[next_pos.x][next_pos.y] = Tiles.floor
+	return top_left
 	

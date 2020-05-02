@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Environment/food.png" type="Texture" id=1]
 [ext_resource path="res://Shadows/MediumShadow.png" type="Texture" id=2]
+[ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Environment/Food.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -32,7 +34,11 @@ tracks/1/keys = {
 "values": [ Vector2( 0.729449, 0.729449 ), Vector2( 0.99514, 0.729449 ), Vector2( 0.729, 0.729 ), Vector2( 0.995, 0.729 ) ]
 }
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 9.27609 )
+
 [node name="Food" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -20.975 )
@@ -49,3 +55,14 @@ anims/idle = SubResource( 1 )
 [node name="Sprite2" type="Sprite" parent="."]
 scale = Vector2( 0.851021, 0.729449 )
 texture = ExtResource( 2 )
+
+[node name="GroceryHitbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="GroceryHitbox" index="0"]
+position = Vector2( 0, -20.7318 )
+shape = SubResource( 2 )
+[connection signal="area_entered" from="GroceryHitbox" to="." method="_on_GroceryHitbox_area_entered"]
+
+[editable path="GroceryHitbox"]

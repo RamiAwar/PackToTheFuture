@@ -36,6 +36,10 @@ func _ready():
 	ProceduralGeneration.food = $YSort/Food
 	
 	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap)
+	
+	
+	GameManager.boss = $CanvasLayer/BossScreen 
+	
 	pass
 	
 	

@@ -185,3 +185,8 @@ func UpdateBlendSpaces():
 #	animation_tree.set("parameters/Run/RunBlendSpace/blend_position", input_vector)
 #	animation_tree.set("parameters/Attack/AttackBlendSpace/blend_position", input_vector)
 #	animation_tree.set("parameters/Roll/RollBlendSpace/blend_position", input_vector)
+
+
+func _on_GroceryHurtbox_area_entered(area):
+	GameManager.got_groceries()
+

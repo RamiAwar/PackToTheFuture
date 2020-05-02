@@ -4,6 +4,7 @@ onready var button1 = $MarginContainer/CenterContainer/VBoxContainer/Button
 onready var button2 = $MarginContainer/CenterContainer/VBoxContainer/Button2
 
 func _ready():
+	visible = false
 	button1.grab_focus()
 	
 func _physics_process(_delta):
