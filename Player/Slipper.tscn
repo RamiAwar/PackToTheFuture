@@ -25,9 +25,8 @@ tracks/0/keys = {
 "values": [ 0.0, -360.0 ]
 }
 
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 5.15441
-height = 1.21499
+[sub_resource type="CircleShape2D" id=5]
+radius = 2.4029
 
 [node name="Slipper" type="KinematicBody2D"]
 position = Vector2( 0, -11.8085 )
@@ -52,14 +51,15 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="Body/Hitbox" index="0"]
+position = Vector2( -0.710114, 0.108156 )
 shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/airborne = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 10.5627 )
+position = Vector2( 0.0519753, 11.7581 )
 rotation = -1.5708
-shape = SubResource( 3 )
+shape = SubResource( 5 )
 
 [editable path="Body/Hitbox"]

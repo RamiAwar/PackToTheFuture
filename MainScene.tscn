@@ -148,6 +148,7 @@ visible = false
 
 [node name="RandomPlacer" parent="YSort" instance=ExtResource( 18 )]
 houseA = ExtResource( 12 )
+foodA = ExtResource( 14 )
 
 [node name="House" parent="YSort" groups=[
 "world",
@@ -170,7 +171,7 @@ position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 10, 10 )
+zoom = Vector2( 5, 5 )
 limit_left = 0
 limit_top = 0
 limit_right = 2048

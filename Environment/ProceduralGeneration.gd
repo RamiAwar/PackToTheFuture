@@ -29,7 +29,7 @@ const Tiles = {
 	'wall': 0,
 	'floor': 1,
 	'dirt': 2,
-	'dirtinvisible': 3,
+	'invisible': 3,
 	'empty': -1
 }
 	
@@ -50,7 +50,6 @@ var character: KinematicBody2D;
 var house: StaticBody2D;
 var container: YSort;
 var shop: StaticBody2D;
-var food: Node2D
 var random_placer:Node2D
 
 func _ready():
@@ -164,11 +163,6 @@ func _create_floor():
 						can_place = false
 				if can_place:
 					# Place house
-					var size = 6
-					var house_top_left = _place_house(curr_location, size);
-					# Set house	
-					house_top_left = (house_top_left + Vector2(size/2, 2))*CellSize
-					random_placer.place_house(house_top_left)
 					house_locations.append(curr_location)
 					
 			
@@ -181,12 +175,13 @@ func _create_floor():
 			
 func _post_processing():
 	
-	var size = 6
+	var size = 8
 	var house_top_left = _place_house(start_position, size);
+	
 	# Set house	
-	house.global_position = (house_top_left + Vector2(size/2, 2))*CellSize
+	house.global_position = (house_top_left + Vector2(size/2, 3))*CellSize
 	GameManager.house_position = house.global_position - Vector2(0, 30)
-	character.global_position = (house_top_left + Vector2(size/2, 2.5))*CellSize 
+	character.global_position = (house_top_left + Vector2(size/2, 3.5))*CellSize 
 	
 	# Get farthest node from start and place grocery store
 	var grid_copy = grid.duplicate(true)
@@ -211,20 +206,40 @@ func _post_processing():
 		_reset()
 		return
 	
-	house_locations.append(last_position)
-	
 	# TODO: Refactor into function find best rect(size)
 	# Find fitting square
+	
+	
 	size = 8
 	var shop_top_left = _place_house(last_position, size);
 	
 	# Set SHOP	
 	shop.global_position = (shop_top_left + Vector2(size/2, 2))*CellSize
-	food.global_position = (shop_top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20)
+	random_placer.place_food((shop_top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20))
 	
 	# Set arrow pointer
 	GameManager.shop_position = shop.global_position
 	
+	# After shop is set, place houses
+	# Remove house that is closest to shop
+	var min_distance = 10000
+	var min_index = -1
+	for index in range(house_locations.size()):
+		var distance = (house_locations[index] - last_position).length()
+		if distance < min_distance:
+			min_distance = distance
+			min_index = index
+	
+	house_locations.remove(min_index)
+	
+	
+	size = 8
+	for location in house_locations:
+		house_top_left = _place_house(location, size);
+		# Set house	
+		house_top_left = (house_top_left + Vector2(size/2, 2))*CellSize
+		random_placer.place_house(house_top_left)
+		
 	# Create walls
 	for x in WIDTH:
 		for y in HEIGHT:
@@ -273,6 +288,14 @@ func _post_processing():
 			if grid[x][y] != Tiles.empty and grid_copy[x][y].y >= 2:
 				# Make sure it is not a single tile
 				grid[x][y] = Tiles.dirt
+	
+	for x in WIDTH:
+		for y in HEIGHT:
+			if x == 0 or y == 0 or x == WIDTH - 1 or y == HEIGHT - 1:
+				continue
+				
+			if grid[x][y] == Tiles.floor or grid[x][y] == Tiles.dirt:
+				invisible_tilemap.set_cellv(Vector2(x, y), 0)
 				
 	# Remove single walls and setup for dirt tiles
 	_remove_diagonals(Tiles.dirt)
@@ -286,7 +309,7 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						invisible_tilemap.set_cellv(Vector2(x, y), 0);
+						pass
 						
 					Tiles.dirt:
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
@@ -297,12 +320,9 @@ func _spawn_tiles():
 					Tiles.wall:	
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
-					Tiles.dirtinvisible:
+					Tiles.invisible:
 						invisible_tilemap.set_cellv(Vector2(x, y), 0)
-						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
-						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);
+						
 			else:
 				debug_tilemap.set_cellv(Vector2(x, y), 0);
 				
@@ -310,7 +330,7 @@ func _spawn_tiles():
 	dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
 	debug_tilemap.update_bitmask_region()
-
+	invisible_tilemap.update_bitmask_region()
 	
 # Initializes grid to -1 (unassigned)
 func _initialize_grid(width: int, height: int):
@@ -398,6 +418,6 @@ func _place_house(position, size):
 	for x in size:
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
-			grid[next_pos.x][next_pos.y] = Tiles.dirtinvisible
+			grid[next_pos.x][next_pos.y] = Tiles.floor
 	return top_left
 	
