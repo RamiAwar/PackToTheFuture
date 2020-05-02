@@ -37,10 +37,11 @@ func _ready():
 	
 	ProceduralGeneration.random_placer = $YSort/RandomPlacer
 	
-	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $InvisibleTileMap)
+	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $Navigation2D/InvisibleTileMap)
 	
 	
-	GameManager.boss = $CanvasLayer/BossScreen 
+	GameManager.boss = $CanvasLayer/BossScreen
+	GameManager.nav_2d = $Navigation2D
 	
 	pass
 	
