@@ -14,6 +14,7 @@ var boss: Control
 
 
 func end_day():
+	$BossSpawn.stop()
 	ProceduralGeneration._reset();
 
 func get_arrow():
