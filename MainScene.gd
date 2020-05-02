@@ -35,7 +35,7 @@ func _ready():
 	ProceduralGeneration.shop = $YSort/Shop
 	ProceduralGeneration.food = $YSort/Food
 	
-	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap)
+	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap)
 	pass
 	
 	

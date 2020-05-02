@@ -16,6 +16,8 @@ var walker_max_streak = 4
 var walker_max_count = 3
 var max_fill_percent = 0.4
 
+var minimum_shop_distance = 28
+
 # Walker class (saves direction and position)
 class Walker:
 	var dir: Vector2
@@ -26,11 +28,13 @@ class Walker:
 const Tiles = {
 	'wall': 0,
 	'floor': 1,
+	'dirt': 2,
 	'empty': -1
 }
 	
 var wall_tilemap : TileMap
 var dirt_tilemap: TileMap
+var debug_tilemap: TileMap
 	
 var grid :Array = []
 var walkers: Array = []
@@ -60,15 +64,13 @@ func _setup():
 	walkers.append(walker);
 	
 	# Set grandma position
-
-	character.global_position = walker.pos*CellSize 
 	start_position = walker.pos
 	
-	character.global_position.x += CellSize.x/2
-	
-func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap):
+func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap):
 	wall_tilemap = _wall_tilemap
 	dirt_tilemap = _dirt_tilemap
+	debug_tilemap = _debug_tilemap
+	
 	_setup();
 	_create_floor();
 	_post_processing();
@@ -77,6 +79,8 @@ func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap):
 func _reset():
 	wall_tilemap.clear()
 	dirt_tilemap.clear()
+	debug_tilemap.clear()
+	
 	_setup();
 	_create_floor();
 	_post_processing();
@@ -142,33 +146,23 @@ func _create_floor():
 			break;
 		
 		_iterations += 1;
-	
-	print(num_floors)
-	print(_iterations)
+
 	
 	
 func _post_processing():
 	
 	# Clear tiles for house
-	for x in 4:
-		for y in 4:
-			grid[start_position.x -2 + x][start_position.y - 2 + y] = Tiles.floor;	
-
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
-		
-			wall_tilemap.set_cellv(Vector2(start_position.x -2 + x, start_position.y - 2 + y), -1);
-	#dirt_tilemap.update_bitmask_region()
-	wall_tilemap.update_bitmask_region()
+	var size = 6
+	var top_left = _find_best_fit(size, start_position)
+	
+	for x in size:
+		for y in size:
+			var next_pos = Vector2(top_left.x + x, top_left.y + y);
+			grid[next_pos.x][next_pos.y] = Tiles.floor
 	
 	# Set house	
-	house.global_position = start_position*CellSize + Vector2(CellSize.x/2, -CellSize.y)
-	
-	
-	# Clear single tiles?
-	# TBD
+	house.global_position = (top_left + Vector2(size/2, 2))*CellSize
+	character.global_position = (top_left + Vector2(size/2, 2.5))*CellSize 
 	
 	# Get farthest node from start and place grocery store
 	var grid_copy = grid.duplicate(true)
@@ -190,47 +184,84 @@ func _post_processing():
 			grid_copy[next.x][next.y] = Tiles.empty;
 			
 	# If too close to each other, regenerate
-	if (last_position - start_position).length() < 23:
+	if (last_position - start_position).length() < minimum_shop_distance:
 		_reset()
 		return
 	
 
-	
+	# TODO: Refactor into function find best rect(size)
 	# Find fitting square
-	var size = 6
-	var top_left = last_position - Vector2(size, size)
-	
-	top_left.x = max(1, top_left.x)
-	top_left.y = max(1, top_left.y)
-	
-	var bottom_right = top_left + Vector2(size, size)
-	bottom_right.x = min(WIDTH-1, bottom_right.x)
-	bottom_right.y = min(HEIGHT-1, bottom_right.y)
-	
-	top_left = bottom_right - Vector2(size, size)
-	
+	size = 6
+	top_left = _find_best_fit(size, last_position)
 	
 	for x in size:
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
-			grid[next_pos.x][next_pos.y] = Tiles.floor;	
+			grid[next_pos.x][next_pos.y] = Tiles.floor
 
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
-		
-			wall_tilemap.set_cellv(Vector2(next_pos.x, next_pos.y), -1);
-	#dirt_tilemap.update_bitmask_region()
-	wall_tilemap.update_bitmask_region()
-	
-	# Set house	
-	shop.global_position = (top_left + Vector2(size/2, size-1))*CellSize
-	food.global_position = (top_left + Vector2(size/2, size-1))*CellSize + Vector2(0, 20)
+
+	# Set SHOP	
+	shop.global_position = (top_left + Vector2(size/2, 2))*CellSize
+	food.global_position = (top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20)
 	
 	# Set arrow pointer
 	Globals.shop_position = shop.global_position
+	
+	# Create walls
+	for x in WIDTH:
+		for y in HEIGHT:
+			if grid[x][y] == Tiles.floor:				
+				for i in range(neighbors.size()):	
+					var next = Vector2(x + neighbors[i][0], y + neighbors[i][1])
+					if next.x >= 0 and next.x < WIDTH and next.y >= 0 and next.y < HEIGHT:		
+						if grid[next.x][next.y] == Tiles.empty:
+							grid[next.x][next.y] = Tiles.wall
+					
+	
+	# Remove single walls and setup for dirt tiles
+	_remove_singles(Tiles.wall)
+	
+	
+	# Foreground tile placement:
+	bfs = []
+	grid_copy = []
+	
+	# Put in all wall nodes into queue
+	for x in WIDTH:
+		grid_copy.append([])
+		for y in HEIGHT:
+			if grid[x][y] == Tiles.wall:
+				bfs.append(Vector2(x, y))
+				grid_copy[x].append(Vector2(grid[x][y], 0))
+			else:
+				grid_copy[x].append(Vector2(grid[x][y], 50000))
+	print("finished setup")
+	
+	var neighbors8 = [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [1, 1], [-1, 1], [1, -1]]
+	while !bfs.empty():
 
+		var position = bfs.pop_front();
+		# Check neighbors
+		for x in range(neighbors8.size()):
+			var next = Vector2(position.x + neighbors8[x][0], position.y + neighbors8[x][1])
+			if next.x >= 1 and next.x < WIDTH-1 and next.y >= 1 and next.y < HEIGHT - 1 and grid_copy[next.x][next.y].x == Tiles.floor:
+				grid_copy[next.x][next.y].y = min(grid_copy[next.x][next.y].y, grid_copy[position.x][position.y].y + 1)
+				grid_copy[next.x][next.y].x = Tiles.empty
+				bfs.append(next)
+
+	# Set dirt tiles where distance from wall is 2
+	for x in WIDTH:
+		for y in HEIGHT:
+			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT - 1:
+				continue			
+			if grid[x][y] != Tiles.empty and grid_copy[x][y].y >= 2:
+				# Make sure it is not a single tile
+				grid[x][y] = Tiles.dirt
+				
+	# Remove single walls and setup for dirt tiles
+	_remove_diagonals(Tiles.dirt)
+	_remove_singles(Tiles.dirt)
+	
 func _spawn_tiles():
 	for x in WIDTH:
 		for y in HEIGHT:
@@ -239,17 +270,23 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
-#						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);	
 						pass
-			else:
-				wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
+					Tiles.dirt:
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);
+						
+					Tiles.wall:	
+						wall_tilemap.set_cellv(Vector2(x, y), 0);
+			else:
+				debug_tilemap.set_cellv(Vector2(x, y), 0);
+				
 										
-	#dirt_tilemap.update_bitmask_region()
+	dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
+	debug_tilemap.update_bitmask_region()
 
 	
 # Initializes grid to -1 (unassigned)
@@ -261,4 +298,75 @@ func _initialize_grid(width: int, height: int):
 			matrix[x].append(-1)
 	return matrix;
 		
+func _remove_singles(tile_index):
+	for x in WIDTH:
+		for y in HEIGHT:
+			
+			# Check if on edges
+			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT-1:
+				continue
+			
+			# If not on edges, make sure all surrounding tiles are floor and this is wall
+			var position = Vector2(x, y);
+			if grid[position.x][position.y] == tile_index:
+				# Check if single tile
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x + 1][position.y] == Tiles.floor and
+					grid[position.x][position.y - 1] == Tiles.floor and grid[position.x][position.y + 1] == Tiles.floor):
+					grid[position.x][position.y] = Tiles.floor
+
+func _remove_diagonals(tile_index):
+	for x in WIDTH:
+		for y in HEIGHT:
+			# Check if on edges
+			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT-1:
+				continue
+			# If not on edges, make sure all surrounding tiles are floor and this is wall
+			var position = Vector2(x, y);
+			if grid[position.x][position.y] == tile_index:
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x + 1][position.y] == Tiles.floor and
+					grid[position.x][position.y - 1] == Tiles.floor and grid[position.x][position.y + 1] == Tiles.floor):
+					grid[position.x][position.y] = Tiles.floor
+
+				# Check if diagonal tile
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x - 1][position.y-1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x + 1][position.y+1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x + 1][position.y-1] == tile_index) or (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x - 1][position.y+1] == tile_index):
+					grid[position.x][position.y] = Tiles.floor
+
+func _remove_diagonals_singles(tile_index):
+	for x in WIDTH:
+		for y in HEIGHT:
+			
+			# Check if on edges
+			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT-1:
+				continue
+			
+			# If not on edges, make sure all surrounding tiles are floor and this is wall
+			var position = Vector2(x, y);
+			if grid[position.x][position.y] == tile_index:
+				# Check if single tile
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x - 1][position.y-1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x + 1][position.y+1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x + 1][position.y-1] == tile_index) or (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x - 1][position.y+1] == tile_index):
+					grid[position.x][position.y] = Tiles.floor
+
+func _find_best_fit(size:int, position:Vector2):
+	
+	var top_left = position - Vector2(size, size)
+	
+	top_left.x = max(1, top_left.x)
+	top_left.y = max(1, top_left.y)
+	
+	var bottom_right = top_left + Vector2(size, size)
+	bottom_right.x = min(WIDTH-1, bottom_right.x)
+	bottom_right.y = min(HEIGHT-1, bottom_right.y)
+	
+	top_left = bottom_right - Vector2(size, size)
+	
+	return top_left
+	
 	
