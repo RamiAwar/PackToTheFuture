@@ -7,7 +7,7 @@ var shadow_velocity = Vector2.ZERO
 
 
 export (int) var MAX_SPEED = 300;
-export (int) var GRAVITY = 5
+export (int) var GRAVITY = 1
 export (int) var minimum_velocity_threshold = 5
 
 
@@ -43,17 +43,19 @@ func _physics_process(delta):
 func apply_gravity(delta):
 
 	if (not grounded):
+		print("not grounded")
 		# Check grounded
-		if $Body.position >= $Shadow.position:
+		if $Body.position.y <= $Shadow.position.y:
 			grounded = true;
-			if bullet_velocity.length() < minimum_velocity_threshold:
-				bullet_velocity = 0
-			else:
-				bullet_velocity = 0.5*bullet_velocity.bounce(Vector2.UP);
+#			if bullet_velocity.length() < minimum_velocity_threshold:
+			bullet_velocity = 0
+			return
+#		else:
+#			bullet_velocity = 0.5*bullet_velocity.bounce(Vector2.UP);
 
-		bullet_velocity.y += GRAVITY * delta;
-		
-		$Body.position += Vector2(0, bullet_velocity.y*0.5*delta);
+#		bullet_velocity.y += GRAVITY * delta;
+#
+		$Body.position += Vector2(0, bullet_velocity.y*delta);
 		position += shadow_velocity;
 		
 

@@ -72,8 +72,7 @@ func _process(delta):
 	else:	
 		input_vector = joystick_move.get_value()
 	
-	$Arrow.point_towards(Globals.shop_position)
-	print(Globals.shop_position)
+	$Arrow.point_towards(GameManager.get_arrow())
 	
 	# State machine
 	match player_state:

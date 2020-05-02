@@ -155,6 +155,7 @@ func _post_processing():
 	var house_top_left = _place_house(start_position, size);
 	# Set house	
 	house.global_position = (house_top_left + Vector2(size/2, 2))*CellSize
+	GameManager.house_position = house.global_position - Vector2(0, 30)
 	character.global_position = (house_top_left + Vector2(size/2, 2.5))*CellSize 
 	
 	# Get farthest node from start and place grocery store
@@ -192,7 +193,7 @@ func _post_processing():
 	food.global_position = (shop_top_left + Vector2(size/2, 2))*CellSize + Vector2(0, 20)
 	
 	# Set arrow pointer
-	Globals.shop_position = shop.global_position
+	GameManager.shop_position = shop.global_position
 	
 	# Create walls
 	for x in WIDTH:
@@ -222,7 +223,6 @@ func _post_processing():
 				grid_copy[x].append(Vector2(grid[x][y], 0))
 			else:
 				grid_copy[x].append(Vector2(grid[x][y], 50000))
-	print("finished setup")
 	
 	var neighbors8 = [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [1, 1], [-1, 1], [1, -1]]
 	while !bfs.empty():
