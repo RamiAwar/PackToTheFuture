@@ -14,7 +14,7 @@ export var radius: float = 10.0 setget set_radius
 export var angle_from:int = 0 setget set_angle_from
 export var angle_to: int = 360 setget set_angle_to 
 
-var n_particles = 0;
+#var n_particles = 0;
 
 func set_range_y(value):
 		if value > TargetDirectionRangeX:
@@ -24,8 +24,9 @@ func set_range_y(value):
 
 
 func _ready():
-	n_particles = Random.rng.randi()%MaxParticles;
-	n_particles = 100
+	#n_particles = Random.rng.randi()%MaxParticles;
+	#n_particles = -1
+	pass
 
 func _physics_process(_delta):
 	pass
@@ -33,10 +34,10 @@ func _physics_process(_delta):
 
 func trigger(angle):
 	
-	if n_particles == 0:
-		return
+	#if n_particles == 0:
+	#	return
 	
-	n_particles -= 1;		
+	#n_particles -= 1;		
 	var particle = Scene.instance()
 	particle.global_position = global_position;
 	
@@ -45,7 +46,7 @@ func trigger(angle):
 	var jump_velocity = Random.rng.randf_range(150, 300);
 	
 	particle.initialize(random_direction, jump_velocity);
-	$"/root/root/YSort".call_deferred("add_child", particle)
+	$"/root/root/YSort/RandomPlacer".call_deferred("add_child", particle)
 
 	
 func set_center(value):

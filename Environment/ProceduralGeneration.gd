@@ -83,6 +83,7 @@ func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_til
 	_spawn_tiles();
 	
 func _reset():
+	
 	wall_tilemap.clear()
 	dirt_tilemap.clear()
 	debug_tilemap.clear()
@@ -90,7 +91,6 @@ func _reset():
 	house_locations = []
 	for n in random_placer.get_children():
 		n.queue_free()
-	
 	
 	_setup();
 	_create_floor();
