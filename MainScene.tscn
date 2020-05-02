@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Utils/Joystick/pressed_roll.png" type="Texture" id=1]
 [ext_resource path="res://Utils/Joystick/unpressed_roll.png" type="Texture" id=2]
@@ -17,7 +17,8 @@
 [ext_resource path="res://Environment/debug_tile.png" type="Texture" id=15]
 [ext_resource path="res://UI/PauseScreen.tscn" type="PackedScene" id=16]
 [ext_resource path="res://UI/BossScreen.tscn" type="PackedScene" id=17]
-[ext_resource path="res://NPCs/Man.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Environment/RandomPlacer.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Environment/empty32.png" type="Texture" id=19]
 
 [sub_resource type="TileSet" id=1]
 0/name = "debug_tile.png 0"
@@ -44,15 +45,44 @@
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="NavigationPolygon" id=2]
+vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="TileSet" id=3]
+0/name = "empty32.png 0"
+0/texture = ExtResource( 19 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 32, 32 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 1
+0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 33488896 ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [ Vector2( 0, 0 ), SubResource( 2 ) ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
 [node name="root" type="Node2D"]
 script = ExtResource( 7 )
 walker_destroy_chance = 0.415
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 512, 512 )
+position = Vector2( 1024, 1024 )
 texture = ExtResource( 6 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 1024, 1024 )
+region_rect = Rect2( 0, 0, 2048, 2048 )
 region_filter_clip = true
 
 [node name="WallTileMap" type="TileMap" parent="." groups=[
@@ -73,6 +103,11 @@ format = 1
 "world",
 ]]
 tile_set = SubResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+
+[node name="InvisibleTileMap" type="TileMap" parent="."]
+tile_set = SubResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
@@ -108,6 +143,9 @@ visible = false
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="RandomPlacer" parent="YSort" instance=ExtResource( 18 )]
+houseA = ExtResource( 12 )
+
 [node name="House" parent="YSort" groups=[
 "world",
 ] instance=ExtResource( 12 )]
@@ -121,20 +159,14 @@ position = Vector2( 96, 0 )
 position = Vector2( 24, 32 )
 scale = Vector2( 0.8, 0.8 )
 
-[node name="Man" parent="YSort" instance=ExtResource( 18 )]
-position = Vector2( 152.449, 74.9951 )
-
-[node name="Man2" parent="YSort" instance=ExtResource( 18 )]
-position = Vector2( 237.664, 62.1615 )
-
 [node name="Grandma" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 6, 6 )
+zoom = Vector2( 10, 10 )
 limit_left = 0
 limit_top = 0
-limit_right = 1024
-limit_bottom = 1024
+limit_right = 2048
+limit_bottom = 2048
 smoothing_speed = 10.0

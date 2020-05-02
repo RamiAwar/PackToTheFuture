@@ -90,7 +90,6 @@ roll={
 2d_physics/layer_4="PlayerHurtbox"
 2d_physics/layer_5="EnemyHurtbox"
 2d_physics/layer_6="Grocery"
-2d_physics/layer_7="SoftCollisions"
 
 [rendering]
 

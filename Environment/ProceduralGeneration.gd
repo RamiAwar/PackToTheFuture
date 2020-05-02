@@ -1,11 +1,11 @@
 extends Node
 
 
-var CellSize: Vector2 = Vector2(32, 32);
+var CellSize: Vector2 = Vector2(64, 64);
 
 
-var WIDTH:int = 1024/CellSize.x	
-var HEIGHT:int = 1024/CellSize.y
+var WIDTH:int 
+var HEIGHT:int
 
 
 var max_iterations = 100000
@@ -29,17 +29,21 @@ const Tiles = {
 	'wall': 0,
 	'floor': 1,
 	'dirt': 2,
+	'dirtinvisible': 3,
 	'empty': -1
 }
 	
 var wall_tilemap : TileMap
 var dirt_tilemap: TileMap
 var debug_tilemap: TileMap
-	
+var invisible_tilemap: TileMap
+
 var grid :Array = []
 var walkers: Array = []
 
 var start_position:Vector2
+
+var house_locations = []
 
 
 var character: KinematicBody2D;
@@ -47,6 +51,7 @@ var house: StaticBody2D;
 var container: YSort;
 var shop: StaticBody2D;
 var food: Node2D
+var random_placer:Node2D
 
 func _ready():
 	
@@ -65,11 +70,13 @@ func _setup():
 	
 	# Set grandma position
 	start_position = walker.pos
+	house_locations.append(start_position)
 	
-func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap):
+func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap, _invisible_tilemap: TileMap):
 	wall_tilemap = _wall_tilemap
 	dirt_tilemap = _dirt_tilemap
 	debug_tilemap = _debug_tilemap
+	invisible_tilemap = _invisible_tilemap
 	
 	_setup();
 	_create_floor();
@@ -80,6 +87,11 @@ func _reset():
 	wall_tilemap.clear()
 	dirt_tilemap.clear()
 	debug_tilemap.clear()
+	
+	house_locations = []
+	for n in random_placer.get_children():
+		n.queue_free()
+	
 	
 	_setup();
 	_create_floor();
@@ -142,6 +154,24 @@ func _create_floor():
 			walkers[i].pos.x = clamp(walkers[i].pos.x, 1, WIDTH - 2)
 			walkers[i].pos.y = clamp(walkers[i].pos.y, 1, HEIGHT - 2)
 			
+			# Check if new house can be placed
+			if (walkers[i].pos - house_locations.back()).length() > 20:
+				# Check against all houses
+				var curr_location = walkers[i].pos
+				var can_place = true
+				for location in house_locations:
+					if (location - curr_location).length() < 20:
+						can_place = false
+				if can_place:
+					# Place house
+					var size = 6
+					var house_top_left = _place_house(curr_location, size);
+					# Set house	
+					house_top_left = (house_top_left + Vector2(size/2, 2))*CellSize
+					random_placer.place_house(house_top_left)
+					house_locations.append(curr_location)
+					
+			
 		if float(num_floors)/(WIDTH * HEIGHT) > max_fill_percent:
 			break;
 		
@@ -168,7 +198,6 @@ func _post_processing():
 	while !bfs.empty():
 		
 		var position = bfs.pop_front();
-		
 		# Check neighbors
 		for x in range(neighbors.size()):
 			var next = Vector2(position.x + neighbors[x][0], position.y + neighbors[x][1])
@@ -182,10 +211,11 @@ func _post_processing():
 		_reset()
 		return
 	
-
+	house_locations.append(last_position)
+	
 	# TODO: Refactor into function find best rect(size)
 	# Find fitting square
-	size = 6
+	size = 8
 	var shop_top_left = _place_house(last_position, size);
 	
 	# Set SHOP	
@@ -226,7 +256,6 @@ func _post_processing():
 	
 	var neighbors8 = [[1, 0], [0, 1], [-1, 0], [0, -1], [-1, -1], [1, 1], [-1, 1], [1, -1]]
 	while !bfs.empty():
-
 		var position = bfs.pop_front();
 		# Check neighbors
 		for x in range(neighbors8.size()):
@@ -257,7 +286,7 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						pass
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						
 					Tiles.dirt:
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
@@ -267,6 +296,13 @@ func _spawn_tiles():
 						
 					Tiles.wall:	
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
+						
+					Tiles.dirtinvisible:
+						invisible_tilemap.set_cellv(Vector2(x, y), 0)
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);
 			else:
 				debug_tilemap.set_cellv(Vector2(x, y), 0);
 				
@@ -354,7 +390,6 @@ func _find_best_fit(size:int, position:Vector2):
 	bottom_right.y = min(HEIGHT-1, bottom_right.y)
 	
 	top_left = bottom_right - Vector2(size, size)
-	
 	return top_left
 	
 func _place_house(position, size):
@@ -363,6 +398,6 @@ func _place_house(position, size):
 	for x in size:
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
-			grid[next_pos.x][next_pos.y] = Tiles.floor
+			grid[next_pos.x][next_pos.y] = Tiles.dirtinvisible
 	return top_left
 	
