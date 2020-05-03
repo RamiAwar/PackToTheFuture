@@ -20,6 +20,8 @@ var bush_spawn_chance = 0.12
 
 var minimum_shop_distance = 28
 
+var TILEMAP_DEBUG_OFF = 1
+
 # Walker class (saves direction and position)
 class Walker:
 	var dir: Vector2
@@ -79,6 +81,7 @@ func _setup():
 	house_locations.append(start_position)
 	
 func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap, _invisible_tilemap: TileMap, _flower_tilemap: TileMap):
+	
 	wall_tilemap = _wall_tilemap
 	dirt_tilemap = _dirt_tilemap
 	debug_tilemap = _debug_tilemap
@@ -189,9 +192,9 @@ func _post_processing():
 	var house_top_left = _place_house(start_position, size);
 	
 	# Set house	
-	house.global_position = (house_top_left + Vector2(size/2, 3))*CellSize
+	house.global_position = (house_top_left + Vector2(size/2, 2))*CellSize
 	GameManager.house_position = house.global_position - Vector2(0, 30)
-	character.global_position = (house_top_left + Vector2(size/2, 3.5))*CellSize 
+	character.global_position = (house_top_left + Vector2(size/2, 2.5))*CellSize 
 	
 	# Get farthest node from start and place grocery store
 	var grid_copy = grid.duplicate(true)
@@ -221,6 +224,7 @@ func _post_processing():
 	
 	
 	size = 8
+	var shop_position = last_position 
 	var shop_top_left = _place_house(last_position, size);
 	
 	# Set SHOP	
@@ -265,6 +269,16 @@ func _post_processing():
 	_remove_singles(Tiles.wall)
 	
 	
+	
+	
+	
+	# Place trees
+	_generate_item("place_tree", Tiles.tree, 6, 35)
+	_generate_item("place_bush", Tiles.bush, 4, 35)
+	_generate_item("place_shrub", Tiles.shrub, 3, 40)
+	_generate_item("place_flower", Tiles.flower, 3, 40, false)
+	
+	
 	# Foreground tile placement:
 	bfs = []
 	grid_copy = []
@@ -273,7 +287,7 @@ func _post_processing():
 	for x in WIDTH:
 		grid_copy.append([])
 		for y in HEIGHT:
-			if grid[x][y] == Tiles.wall:
+			if (grid[x][y] == Tiles.wall or grid[x][y] == Tiles.bush or grid[x][y] == Tiles.tree or grid[x][y] == Tiles.flower):
 				bfs.append(Vector2(x, y))
 				grid_copy[x].append(Vector2(grid[x][y], 0))
 			else:
@@ -285,11 +299,17 @@ func _post_processing():
 		# Check neighbors
 		for x in range(neighbors8.size()):
 			var next = Vector2(position.x + neighbors8[x][0], position.y + neighbors8[x][1])
-			if next.x >= 1 and next.x < WIDTH-1 and next.y >= 1 and next.y < HEIGHT - 1 and grid_copy[next.x][next.y].x == Tiles.floor:
+			if next.x >= 1 and next.x < WIDTH-1 and next.y >= 1 and next.y < HEIGHT - 1 and (
+					grid_copy[next.x][next.y].x == Tiles.floor or
+					grid_copy[next.x][next.y].x == Tiles.shrub 
+				):
 				grid_copy[next.x][next.y].y = min(grid_copy[next.x][next.y].y, grid_copy[position.x][position.y].y + 1)
 				grid_copy[next.x][next.y].x = Tiles.empty
 				bfs.append(next)
-
+				
+				
+	
+			
 	# Set dirt tiles where distance from wall is 2
 	for x in WIDTH:
 		for y in HEIGHT:
@@ -302,18 +322,11 @@ func _post_processing():
 	# Remove single walls and setup for dirt tiles
 	_remove_diagonals(Tiles.dirt)
 	_remove_singles(Tiles.dirt)
-	
-	
-	# Place trees
-	_generate_item("place_tree", Tiles.tree, 6, 35)
-	_generate_item("place_bush", Tiles.bush, 4, 35)
-	_generate_item("place_shrub", Tiles.shrub, 3, 40)
-	_generate_item("place_flower", Tiles.flower, 4, 40, false)
-	
-	
 	_remove_diagonals(Tiles.dirt)
-	_remove_singles(Tiles.dirt)
 	_remove_diagonals(Tiles.dirt)
+	
+	
+
 	
 	
 func _spawn_tiles():
@@ -324,7 +337,7 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						invisible_tilemap.set_cellv(Vector2(x, y), 0);
+						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF);
 						
 					Tiles.house:
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
@@ -334,7 +347,7 @@ func _spawn_tiles():
 #						debug_tilemap.set_cellv(Vector2(x, y), 0)
 												
 					Tiles.dirt:
-						invisible_tilemap.set_cellv(Vector2(x, y), 0);
+						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
@@ -344,11 +357,14 @@ func _spawn_tiles():
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
 					Tiles.flower:
+						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF)
 						flower_tilemap.set_cellv(Vector2(x, y), 0);
-						
+					
+					Tiles.shrub:
+						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF)
 			else:
-				debug_tilemap.set_cellv(Vector2(x, y), 0);
-				
+#				debug_tilemap.set_cellv(Vector2(x, y), 0);
+				wall_tilemap.set_cellv(Vector2(x, y), 0);
 										
 	dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
@@ -424,16 +440,14 @@ func _remove_diagonals_singles(tile_index):
 
 func _find_best_fit(size:int, position:Vector2):
 	
-	var top_left = position - Vector2(size, size)
-	
-	top_left.x = max(1, top_left.x)
-	top_left.y = max(1, top_left.y)
+	var top_left = position
 	
 	var bottom_right = top_left + Vector2(size, size)
 	bottom_right.x = min(WIDTH-1, bottom_right.x)
 	bottom_right.y = min(HEIGHT-1, bottom_right.y)
 	
 	top_left = bottom_right - Vector2(size, size)
+	
 	return top_left
 	
 func _place_house(position, size):
@@ -443,10 +457,17 @@ func _place_house(position, size):
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
 			grid[next_pos.x][next_pos.y] = Tiles.floor
-			if x != 0 and y != 0 and x != size-1 and y != size-1:
+			if x > 1 and y >2 and x < size-2 and y < size-3:
 				grid[next_pos.x][next_pos.y] = Tiles.house
+	
+	# Start a small walk to ensure connectedness
+#	for x in size + 2:
+#		for y in size + 2:
+#
 				
-	return top_left
+	return top_left + Vector2(0, 2.7)
+	
+	
 	
 	
 
@@ -468,7 +489,7 @@ func _generate_random_point_around(point, min_dist):
 	var r2 = Random.rng.randf()
 	var radius = min_dist*(r1 + 1)
 	var angle = 2*PI*r2
-	return Vector2(point.x + radius*cos(angle), point.y + radius*sin(angle))
+	return Vector2(int(point.x + radius*cos(angle)), int(point.y + radius*sin(angle)))
 	
 func _in_neighborhood(new_point, min_dist, item):
 	for x in range(min_dist*2):
@@ -514,6 +535,7 @@ func _generate_item(method, item, min_dist, n_points, use_random_placer=true):
 						if new_point.x + x > 0 and new_point.x + x < WIDTH-1 and new_point.y + y > 0 and new_point.y + y < HEIGHT-1:
 							if grid[new_point.x + x - 2][new_point.y + y - 2] == Tiles.dirt:
 								grid[new_point.x + x - 2][new_point.y + y - 2] = Tiles.floor
+								
 				grid[new_point.x][new_point.y] = item
 				
 				if use_random_placer:

@@ -5,6 +5,7 @@ export (PackedScene) var foodA
 export (PackedScene) var treeA
 export (PackedScene) var Bush
 export (PackedScene) var Shrub
+export (PackedScene) var Professor
 
 func place_house(location):
 	var house = houseA.instance()
@@ -34,3 +35,8 @@ func place_shrub(location):
 	shrub.global_position = location 
 	add_child(shrub)
 
+func place_professor(location):
+	var professor = Professor.instance()
+	professor.global_position = location
+	add_child(professor)
+	professor.add_to_group("enemy")
