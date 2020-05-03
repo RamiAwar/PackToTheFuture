@@ -5,12 +5,6 @@
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
-walker_destroy_chance = 0.1
-walker_change_chance = 0.4
-walker_spawn_chance = 0.1
-walker_max_streak = 2
-walker_max_count = 5
-max_fill_percent = 0.4
 
 [node name="OpenSimplexNoiseGeneration" type="Node" parent="."]
 script = ExtResource( 2 )
