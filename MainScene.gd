@@ -36,7 +36,7 @@ func _ready():
 	
 	ProceduralGeneration.random_placer = $YSort/RandomPlacer
 	
-	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $Navigation2D/InvisibleTileMap)
+	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $Navigation2D/InvisibleTileMap, $FlowerTileMap)
 	
 	
 	GameManager.boss = $CanvasLayer/BossScreen

@@ -35,6 +35,7 @@ const Tiles = {
 	'tree': 4,
 	'bush': 5,
 	'shrub': 6,
+	'flower': 7,
 	'empty': -1
 }
 	
@@ -42,6 +43,7 @@ var wall_tilemap : TileMap
 var dirt_tilemap: TileMap
 var debug_tilemap: TileMap
 var invisible_tilemap: TileMap
+var flower_tilemap: TileMap
 
 var grid :Array = []
 var walkers: Array = []
@@ -76,11 +78,12 @@ func _setup():
 	start_position = walker.pos
 	house_locations.append(start_position)
 	
-func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap, _invisible_tilemap: TileMap):
+func _generate_world(_wall_tilemap : TileMap, _dirt_tilemap: TileMap, _debug_tilemap: TileMap, _invisible_tilemap: TileMap, _flower_tilemap: TileMap):
 	wall_tilemap = _wall_tilemap
 	dirt_tilemap = _dirt_tilemap
 	debug_tilemap = _debug_tilemap
 	invisible_tilemap = _invisible_tilemap
+	flower_tilemap = _flower_tilemap
 	
 	_setup();
 	_create_floor();
@@ -301,10 +304,10 @@ func _post_processing():
 	
 	
 	# Place trees
-	_generate_item("place_tree", Tiles.tree, 7, 25)
-	_generate_item("place_bush", Tiles.bush, 3, 35)
-	_generate_item("place_shrub", Tiles.shrub, 2, 40)
-	_generate_item("place_flower", Tiles.flower, 2, 40)
+	_generate_item("place_tree", Tiles.tree, 6, 35)
+	_generate_item("place_bush", Tiles.bush, 4, 35)
+	_generate_item("place_shrub", Tiles.shrub, 3, 40)
+	_generate_item("place_flower", Tiles.flower, 2, 40, false)
 	
 	
 	_remove_diagonals(Tiles.dirt)
@@ -339,6 +342,9 @@ func _spawn_tiles():
 					Tiles.wall:	
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
+					Tiles.flower:
+						flower_tilemap.set_cellv(Vector2(x, y), 0);
+						
 			else:
 				debug_tilemap.set_cellv(Vector2(x, y), 0);
 				
@@ -347,6 +353,7 @@ func _spawn_tiles():
 	wall_tilemap.update_bitmask_region()
 	debug_tilemap.update_bitmask_region()
 	invisible_tilemap.update_bitmask_region()
+	flower_tilemap.update_bitmask_region()
 	
 # Initializes grid to -1 (unassigned)
 func _initialize_grid(width: int, height: int):
@@ -470,7 +477,7 @@ func _in_neighborhood(new_point, min_dist, item):
 					return true
 	return false
 	
-func _generate_item(method, item, min_dist, n_points):
+func _generate_item(method, item, min_dist, n_points, use_random_placer=true):
 
 	var queue = []
 #	var sample_points = []
@@ -508,4 +515,5 @@ func _generate_item(method, item, min_dist, n_points):
 								grid[new_point.x + x - 2][new_point.y + y - 2] = Tiles.floor
 				grid[new_point.x][new_point.y] = item
 				
-				random_placer.call(method, new_point*CellSize + CellSize/2)
+				if use_random_placer:
+					random_placer.call(method, new_point*CellSize + CellSize/2)
