@@ -37,6 +37,7 @@ func _ready():
 	ProceduralGeneration.random_placer = $YSort/RandomPlacer
 	
 	GameManager.transition_controller = $CanvasLayer/TransitionController
+	GameManager.grandma = $YSort/Grandma
 	
 	GameManager.initialize()
 	

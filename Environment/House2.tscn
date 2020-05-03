@@ -18,16 +18,16 @@ position = Vector2( 6.99479e-06, 178 )
 scale = Vector2( 1.18627, 1.18627 )
 texture = ExtResource( 1 )
 centered = false
-offset = Vector2( -48, -245.578 )
+offset = Vector2( -48, -234 )
 
 [node name="GroceryBarrier" type="CollisionShape2D" parent="."]
-position = Vector2( 23.3105, -21.9947 )
+position = Vector2( 23.0422, -6.70167 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -18.1391, -22.2006 )
+position = Vector2( -18.1391, -6.90757 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2( 41.8253, -21.9663 )
+position = Vector2( 41.8253, -6.67326 )
 shape = SubResource( 3 )
