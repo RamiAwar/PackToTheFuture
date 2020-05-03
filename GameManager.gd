@@ -18,17 +18,26 @@ signal reset_hoard_timer
 
 
 var transition_controller : ColorRect
+var random_placer : YSort
 
+
+
+var day_label: Label
 
 func increment_variables():
-	pass
+	dayNum += 1
+	day_label.text = str(dayNum)
+
 
 func reset_variables():
-	pass
+	dayNum = 1
+	day_label.text = str(dayNum)
 
 func initialize():
+
 	fadeout()
 	emit_signal("reset_hoard_timer")
+
 
 	
 func fadeout():
@@ -38,18 +47,17 @@ func fadein():
 	transition_controller.fadein()
 	
 func end_day():
-
+	increment_variables()
 	fadeout();
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
 
 
 func end_life():
-
+	reset_variables()
 	fadeout()
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
-
 
 func get_arrow():
 	if has_groceries:
@@ -65,4 +73,6 @@ func got_groceries():
 func _spawn_boss():
 	boss.trigger();
 	$BossSpawn.stop()
+	ProceduralGeneration.place_professor(granny_position)
+	
 
