@@ -10,6 +10,8 @@ func _ready():
 func play_hoard():
 	get_tree().paused = true
 	$Timer.start()
+	$LabelDay.set_deferred("visible", true)
+	$LabelDay.set_deferred("text", "Day " + str(GameManager.dayNum))
 	arr[time].set_deferred("visible", true)
 	
 
@@ -20,6 +22,7 @@ func _on_Timer_timeout():
 		arr[time].set_deferred("visible", true)
 		$Timer.start()
 	else:
+		$LabelDay.set_deferred("visible", false)
 		get_tree().paused = false
 		time = 3
 		GameManager.fadein()

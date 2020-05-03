@@ -6,6 +6,7 @@ export (int) var boss_range_spawn_wait = 10
 var granny_position = Vector2(0, 0)
 var nav_2d = null
 var detected_enemies = 0
+var dayNum = 1
 
 onready var shop_position = Vector2(0, 0)
 onready var house_position = Vector2(0, 0)
@@ -19,7 +20,11 @@ signal reset_hoard_timer
 var transition_controller : ColorRect
 
 
+func increment_variables():
+	pass
 
+func reset_variables():
+	pass
 
 func initialize():
 	fadeout()
