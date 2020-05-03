@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://NPCs/man.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://NPCs/PlayerDetectionZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://NPCs/Man.gd" type="Script" id=7]
 [ext_resource path="res://Stats.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Speech.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.60988
@@ -80,7 +81,7 @@ start_node = "Walk"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 107.0
+radius = 75.7766
 
 [sub_resource type="CapsuleShape2D" id=12]
 radius = 10.121
@@ -98,6 +99,10 @@ height = 9.27637
 collision_layer = 4
 script = ExtResource( 7 )
 WANDER_TARGET_RANGE = 4
+
+[node name="Speech" parent="." instance=ExtResource( 9 )]
+position = Vector2( 0, -34.7361 )
+scale = Vector2( 0.636581, 0.636581 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -12 )
@@ -123,6 +128,7 @@ parameters/Walk/blend_position = Vector2( -0.0012092, 0 )
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
 
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+position = Vector2( 0, -3.27796 )
 shape = SubResource( 11 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 1 )]
@@ -149,12 +155,13 @@ rotation = -1.5708
 shape = SubResource( 14 )
 
 [node name="WanderController" parent="." instance=ExtResource( 5 )]
-wander_range = 130
+wander_range = 70
 
 [node name="Stats" parent="." instance=ExtResource( 8 )]
 max_health = 2
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
+[connection signal="no_health" from="Stats" to="Speech" method="set_angry"]
 
 [editable path="PlayerDetectionZone"]
 

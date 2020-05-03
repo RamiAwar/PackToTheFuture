@@ -36,23 +36,31 @@ func _ready():
 	
 	ProceduralGeneration.random_placer = $YSort/RandomPlacer
 	
+	GameManager.transition_controller = $CanvasLayer/TransitionController
+	
+	GameManager.initialize()
+	
 	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $Navigation2D/InvisibleTileMap, $FlowerTileMap)
 	
 	
 	GameManager.boss = $CanvasLayer/BossScreen
 	GameManager.nav_2d = $Navigation2D
 	
-	pass
+	
 	
 	
 func _input(event):
 
 #	pass
-	if Input.is_action_pressed("roll"):
-		ProceduralGeneration._reset()
-	
-	
+#	if Input.is_action_pressed("roll"):
+#		ProceduralGeneration._reset()
+#		GameManager.fadeout()
+#
+#	if Input.is_action_pressed("ui_cancel"):
+#		GameManager.fadein()
+#
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+	pass

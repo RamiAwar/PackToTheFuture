@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI/curtain.png" type="Texture" id=1]
 [ext_resource path="res://UI/TransitionRect.gd" type="Script" id=2]
@@ -23,7 +23,40 @@ shader_param/cutoff = 1.0
 shader_param/smooth_size = 0.38
 shader_param/mask = ExtResource( 1 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "fadein"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "fadeout"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
 [node name="ColorRect" type="ColorRect"]
+pause_mode = 2
 material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,3 +65,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fadein = SubResource( 3 )
+anims/fadeout = SubResource( 4 )

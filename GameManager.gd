@@ -15,16 +15,36 @@ var has_groceries:bool = false
 var boss: Control
 signal reset_hoard_timer
 
+
+var transition_controller : ColorRect
+
+
+
+
+func initialize():
+	fadeout()
+	emit_signal("reset_hoard_timer")
+
+	
+func fadeout():
+	transition_controller.fadeout()
+	
+func fadein():
+	transition_controller.fadein()
+	
 func end_day():
+
+	fadeout();
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
-	emit_signal("reset_hoard_timer")
-	
+
 
 func end_life():
+
+	fadeout()
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
-	emit_signal("reset_hoard_timer")
+
 
 func get_arrow():
 	if has_groceries:

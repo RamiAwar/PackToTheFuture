@@ -110,6 +110,9 @@ func _reset():
 	_post_processing();
 	_spawn_tiles();
 	
+	GameManager.emit_signal("reset_hoard_timer")
+
+	
 func _create_floor():
 	
 	var _iterations = 0
