@@ -85,6 +85,7 @@ func pick_random_state(state_list):
 	return state_list.pop_front()
 
 func _on_Hurtbox_area_entered(area):
+	
 	stats.health -= area.Damage
 #	knockback = area.knockback_vector*120
 	knockback = -(area.hit_center - global_position).normalized()*120
@@ -92,5 +93,5 @@ func _on_Hurtbox_area_entered(area):
 
 
 func _on_Stats_no_health():
-	print("angry")
+
 	$PlayerDetectionZone/CollisionShape2D.set_deferred("disabled", true)
