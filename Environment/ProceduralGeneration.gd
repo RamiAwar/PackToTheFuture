@@ -378,7 +378,7 @@ func _spawn_tiles():
 	dirt_tilemap.update_bitmask_region()
 	wall_tilemap.update_bitmask_region()
 	debug_tilemap.update_bitmask_region()
-	invisible_tilemap.update_bitmask_region()
+#	invisible_tilemap.update_bitmask_region()
 	flower_tilemap.update_bitmask_region()
 	
 # Initializes grid to -1 (unassigned)
