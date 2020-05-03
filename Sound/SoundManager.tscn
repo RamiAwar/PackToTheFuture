@@ -45,13 +45,9 @@ stream = ExtResource( 14 )
 stream = ExtResource( 5 )
 volume_db = -25.0
 
-[node name="Bush" type="AudioStreamPlayer" parent="Objects"]
-stream = ExtResource( 6 )
-volume_db = -6.0
-
 [node name="Tree" type="AudioStreamPlayer" parent="Objects"]
 stream = ExtResource( 7 )
-volume_db = -6.0
+volume_db = 2.937
 
 [node name="TreeTrunkCreak" type="AudioStreamPlayer" parent="Objects"]
 stream = ExtResource( 8 )
@@ -91,6 +87,16 @@ number_of_samples = 1
 [node name="WallHit1" type="AudioStreamPlayer" parent="Objects/Wall"]
 stream = ExtResource( 13 )
 volume_db = -15.6
+
+[node name="Bush" type="Node" parent="Objects"]
+
+[node name="RandomBush" parent="Objects/Bush" instance=ExtResource( 11 )]
+number_of_samples = 1
+volume = 0
+
+[node name="Bush" type="AudioStreamPlayer" parent="Objects/Bush"]
+stream = ExtResource( 6 )
+volume_db = 3.749
 
 [node name="BackgroundLoop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 15 )

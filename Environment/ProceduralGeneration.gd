@@ -34,6 +34,7 @@ const Tiles = {
 	'house': 3,
 	'tree': 4,
 	'bush': 5,
+	'shrub': 6,
 	'empty': -1
 }
 	
@@ -54,7 +55,7 @@ var character: KinematicBody2D;
 var house: StaticBody2D;
 var container: YSort;
 var shop: StaticBody2D;
-var random_placer:Node2D
+var random_placer:YSort
 
 func _ready():
 	
@@ -300,24 +301,15 @@ func _post_processing():
 	
 	
 	# Place trees
-	var quad = [[1,1],[1,0],[0,1],[1,2],[2,1],[0,2],[2,2],[2,0]]
-	for x in WIDTH-2:
-		for y in HEIGHT-2:
-			var placeable = true
-			for q in quad:
-				if grid[x+q[0]][y+q[1]] != Tiles.floor and grid[x+q[0]][y+q[1]] != Tiles.dirt:
-					placeable = false
-			if placeable and Random.rng.randf() < tree_spawn_chance:
-				random_placer.place_tree(Vector2(x+1, y+1)*CellSize)
-				grid[x][y] = Tiles.tree
-				grid[x+1][y+1] = Tiles.tree
-			elif placeable and Random.rng.randf() < bush_spawn_chance:
-				random_placer.place_bush(Vector2(x+1, y+1)*CellSize)
-				grid[x][y] = Tiles.tree
-				grid[x+1][y+1] = Tiles.tree
+	_generate_item("place_tree", Tiles.tree, 7, 25)
+	_generate_item("place_bush", Tiles.bush, 3, 35)
+	_generate_item("place_shrub", Tiles.shrub, 2, 40)
+	_generate_item("place_flower", Tiles.flower, 2, 40)
+	
 	
 	_remove_diagonals(Tiles.dirt)
 	_remove_singles(Tiles.dirt)
+	_remove_diagonals(Tiles.dirt)
 	
 	
 func _spawn_tiles():
@@ -448,3 +440,72 @@ func _place_house(position, size):
 				
 	return top_left
 	
+	
+
+func _check_placeable(z):
+	var x = z.x
+	var y = z.y
+	var quad = [[1,1],[1,0],[0,1], [0,0]]
+	var placeable = true
+	if x <= 0 or y <= 0 or x >= WIDTH-1 or y >= HEIGHT-1:
+		return false
+		
+	for q in quad:
+		if grid[x+q[0]][y+q[1]] != Tiles.floor and grid[x+q[0]][y+q[1]] != Tiles.dirt:
+			placeable = false
+	return placeable
+	
+func _generate_random_point_around(point, min_dist):
+	var r1 = Random.rng.randf()
+	var r2 = Random.rng.randf()
+	var radius = min_dist*(r1 + 1)
+	var angle = 2*PI*r2
+	return Vector2(point.x + radius*cos(angle), point.y + radius*sin(angle))
+	
+func _in_neighborhood(new_point, min_dist, item):
+	for x in range(min_dist*2):
+		for y in range(min_dist*2):
+			if new_point.x + x - min_dist> 0 and new_point.x + x- min_dist < WIDTH-1 and new_point.y + y - min_dist> 0 and new_point.y + y - min_dist< HEIGHT-1:
+				if grid[ int(new_point.x) + x - min_dist][ int(new_point.y) + y - min_dist] == item:
+					return true
+	return false
+	
+func _generate_item(method, item, min_dist, n_points):
+
+	var queue = []
+#	var sample_points = []
+	var start_position =  Vector2(Random.rng.randi()%(WIDTH-2) + 1,
+									Random.rng.randi()%(HEIGHT-2) + 1)
+	
+	# Generate first point randomly
+	while !_check_placeable(start_position):
+		start_position = Vector2(Random.rng.randi()%(WIDTH-2) + 1,
+									Random.rng.randi()%(HEIGHT-2) + 1)
+									
+	# Guaranteed placeable point
+	queue.append(start_position)
+#	sample_points.append(start_position)
+	grid[start_position.x][start_position.y] = item
+	
+	while not queue.empty():
+		
+		# Select random element
+		var random_index = Random.rng.randi()%queue.size()
+		var point = queue[random_index]
+		queue.remove(random_index)
+		
+		for i in range(n_points):
+			var new_point = _generate_random_point_around(point, min_dist);
+			
+			# Check that point is in grid and placeable
+			if(_check_placeable(new_point) and not _in_neighborhood(new_point, min_dist, item)):
+				queue.append(new_point);
+#				sample_points.append(new_point);
+				for x in range(5):
+					for y in range(5):
+						if new_point.x + x > 0 and new_point.x + x < WIDTH-1 and new_point.y + y > 0 and new_point.y + y < HEIGHT-1:
+							if grid[new_point.x + x - 2][new_point.y + y - 2] == Tiles.dirt:
+								grid[new_point.x + x - 2][new_point.y + y - 2] = Tiles.floor
+				grid[new_point.x][new_point.y] = item
+				
+				random_placer.call(method, new_point*CellSize + CellSize/2)

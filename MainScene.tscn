@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Utils/Joystick/pressed_roll.png" type="Texture" id=1]
 [ext_resource path="res://Utils/Joystick/unpressed_roll.png" type="Texture" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://UI/TransitionRect.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Environment/Tree.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Environment/Bush.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Environment/Shrub.tscn" type="PackedScene" id=24]
 
 [sub_resource type="NavigationPolygon" id=2]
 vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -161,6 +162,7 @@ houseA = ExtResource( 12 )
 foodA = ExtResource( 14 )
 treeA = ExtResource( 22 )
 Bush = ExtResource( 23 )
+Shrub = ExtResource( 24 )
 
 [node name="House" parent="YSort" groups=[
 "world",
@@ -176,7 +178,6 @@ position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 6, 6 )
 limit_left = 0
 limit_top = 0
 limit_right = 2048

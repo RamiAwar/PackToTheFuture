@@ -42,6 +42,9 @@ func _physics_process(delta):
 			gravity = true
 			if collision.collider.is_in_group("world"):
 				SoundManager.get_node("Objects/Wall/WallRandom").play()
+			elif collision.collider.is_in_group("leaves"):
+				SoundManager.get_node("Objects/Bush/RandomBush").play()
+			
 		
 		else:
 			$Body/Hitbox.hit_center = $Body.global_position
