@@ -149,6 +149,7 @@ shape = SubResource( 14 )
 
 [node name="WanderController" parent="." instance=ExtResource( 5 )]
 wander_range = 70
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
 [editable path="PlayerDetectionZone"]
 

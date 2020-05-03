@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ProceduralGeneration"
-run/main_scene="res://MainScene.tscn"
+run/main_scene="res://UI/TitleScreen.tscn"
 boot_splash/use_filter=false
 config/icon="res://icon.png"
 
@@ -35,6 +35,7 @@ Globals="*res://Globals.tscn"
 GameManager="*res://GameManager.tscn"
 HouseSpawner="*res://Environment/HouseSpawner.tscn"
 InfectedSpawner="*res://NPCs/InfectedSpawner.tscn"
+FoodSpawner="*res://Environment/FoodSpawner.tscn"
 
 [display]
 

@@ -15,10 +15,10 @@ func place_house(location):
 	house.add_to_group("world")
 	
 func place_food(location):
-#	var food = FoodSpawner.instance()
-#	food.global_position = location
-#	add_child(food)
-	pass
+	var food = FoodSpawner.get_random_scene().instance()
+	food.global_position = location
+	add_child(food)
+
 	
 func place_tree(location):
 	var tree = treeA.instance()

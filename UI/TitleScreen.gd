@@ -5,7 +5,7 @@ var scene_path_to_load
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Menu/CenterRow/Buttons/NewGame.grab_focus()
+	$MarginContainer/VBoxContainer/NewGame.grab_focus()
 	pass
 #	for button in $Menu/CenterRow/Buttons.get_children():
 #		print(button)
@@ -21,7 +21,7 @@ func _on_FadeIn_fade_finished():
 
 
 func _on_NewGame_pressed():
-	scene_path_to_load = $Menu/CenterRow/Buttons/NewGame.scene_to_load
+	scene_path_to_load = $MarginContainer/VBoxContainer/NewGame.scene_to_load
 	$FadeIn.show()
 	$FadeIn.fade_in()
 
