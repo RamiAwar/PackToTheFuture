@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/slipper_wall.wav-63abdedc226a8558e288d967c4adf193.sample"
+
+[deps]
+
+source_file="res://Sound/assets/slipper_wall.wav"
+dest_files=[ "res://.import/slipper_wall.wav-63abdedc226a8558e288d967c4adf193.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

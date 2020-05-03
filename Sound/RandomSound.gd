@@ -6,7 +6,7 @@ export var NumberOfSources = 4
 export var number_of_samples = 3
 
 var index = 0;
-export var transition_duration = 1
+export var transition_duration = 0.6
 export var transition_type = 1 # SINE
 
 # Called when the node enters the scene tree for the first time.

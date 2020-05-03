@@ -149,7 +149,9 @@ visible = false
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="SmartMan" parent="YSort" instance=ExtResource( 20 )]
+[node name="SmartMan" parent="YSort" groups=[
+"enemy",
+] instance=ExtResource( 20 )]
 position = Vector2( 312, 224 )
 
 [node name="RandomPlacer" parent="YSort" instance=ExtResource( 18 )]

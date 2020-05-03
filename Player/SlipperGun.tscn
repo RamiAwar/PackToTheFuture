@@ -36,7 +36,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ -110.0, 90.0, 360.0 ]
+"values": [ 360.0, 90.0, -110.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite/Sprite2:visible")

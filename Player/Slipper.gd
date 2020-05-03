@@ -15,9 +15,10 @@ export (int) var minimum_velocity_threshold = 5
 
 
 func _ready():
-	#call_deferred("set_process", false)
+
+	# Play boomerang sound
 	SoundManager.get_node("Objects/Slipper/SlipperRandom").play(true)
-#	$Body/Hitbox.collided = collided
+	
 	
 	
 func initialize(direction, jump_velocity):
@@ -41,6 +42,7 @@ func _physics_process(delta):
 			gravity = true
 			if collision.collider.is_in_group("world"):
 				SoundManager.get_node("Objects/Wall/WallRandom").play()
+		
 		else:
 			$Body/Hitbox.hit_center = $Body.global_position
 	else:
@@ -51,6 +53,7 @@ func _physics_process(delta):
 			
 
 func collided():
+	SoundManager.get_node("Objects/Hit/RandomHit").play(false)
 	collisionShape2D.set_deferred("disabled", true)
 	hitBoxCollision.set_deferred("disabled", true)
 	animationPlayer.stop()
@@ -76,9 +79,6 @@ func apply_gravity(delta):
 		position += shadow_velocity;
 		
 
-func _on_Hurtbox_area_entered(area):
-	SoundManager.get_node("Objects/Coin/CoinRandom").play();
-	queue_free();
 
 func _on_Hitbox_area_entered(area):
 	collided()

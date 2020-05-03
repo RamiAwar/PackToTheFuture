@@ -58,7 +58,8 @@ func _ready():
 
 		
 	# Modify animation speed snippet
-	animation_tree.set("parameters/Idle/Speed/scale", 1.0)
+	animation_tree.set("parameters/IdleUp/Speed/scale", 1.0)
+	animation_tree.set("parameters/IdleDown/Speed/scale", 1.0)
 	animation_tree.set("parameters/MoveUp/Speed/scale", 1.4)
 	animation_tree.set("parameters/MoveDown/Speed/scale", 1.4)
 	
@@ -93,12 +94,12 @@ func _process(delta):
 
 # Physics handling
 func _physics_process(delta):
+	
 	player_velocity = move_and_slide(player_velocity)
 	GameManager.granny_position = global_position
 
-
+	$SlipperGun.facing_up = last_input.y < 0
 	
-
 func MoveState(delta):
 	
 	if input_vector != Vector2.ZERO:	
@@ -112,7 +113,11 @@ func MoveState(delta):
 		
 		if input_vector.x < 0:
 			$Sprite.flip_h = true
+			$SlipperGun.scale.x = -1
+			$SlipperGun.position.x = 3.89
 		else:
+			$SlipperGun.scale.x = 1
+			$SlipperGun.position.x = -3.89
 			$Sprite.flip_h = false
 			
 		if input_vector.y < 0:

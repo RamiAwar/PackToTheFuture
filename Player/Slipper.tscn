@@ -62,5 +62,6 @@ anims/airborne = SubResource( 1 )
 position = Vector2( 0.0519753, 11.7581 )
 rotation = -1.5708
 shape = SubResource( 5 )
+[connection signal="area_entered" from="Body/Hitbox" to="." method="_on_Hitbox_area_entered"]
 
 [editable path="Body/Hitbox"]
