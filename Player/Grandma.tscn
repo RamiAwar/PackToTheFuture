@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Player/grandma.png" type="Texture" id=1]
 [ext_resource path="res://Player/Detective.gd" type="Script" id=2]
@@ -10,7 +10,7 @@
 radius = 2.23157
 height = 10.7571
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=2]
 resource_name = "IdleDown"
 length = 0.6
 loop = true
@@ -39,7 +39,7 @@ tracks/1/keys = {
 "values": [ Vector2( -3.99393, -6.49841 ), Vector2( -4.28247, -5.44042 ), Vector2( -4.90765, -6.16178 ) ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=3]
 resource_name = "IdleUp"
 length = 0.6
 loop = true
@@ -68,7 +68,7 @@ tracks/1/keys = {
 "values": [ Vector2( -3.76074, -6.48347 ), Vector2( -3.82136, -7.27151 ), Vector2( -3.6092, -8.99913 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=4]
 resource_name = "MoveDown"
 length = 0.8
 loop = true
@@ -97,7 +97,7 @@ tracks/1/keys = {
 "values": [ Vector2( -3.99393, -6.20987 ), Vector2( -3.80157, -7.65259 ), Vector2( -3.63669, -6.29231 ), Vector2( -4.75422, -4.73967 ), Vector2( -4.4098, -5.41844 ), Vector2( -5.17146, -8.02083 ), Vector2( -4.77895, -7.03245 ), Vector2( -4.96353, -5.17844 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=5]
 resource_name = "MoveUp"
 length = 0.9
 loop = true
@@ -126,103 +126,107 @@ tracks/1/keys = {
 "values": [ Vector2( -4.48262, -6.62116 ), Vector2( -3.90554, -6.81352 ), Vector2( -3.97767, -5.25058 ), Vector2( -3.76126, -4.38839 ), Vector2( -3.88149, -5.24142 ), Vector2( -3.80935, -7.72954 ), Vector2( -3.59294, -6.58681 ), Vector2( -3.8895, -4.67464 ), Vector2( -3.5128, -4.97463 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=19]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "IdleDown"
 
-[sub_resource type="AnimationNodeTimeScale" id=20]
+[sub_resource type="AnimationNodeTimeScale" id=7]
 
-[sub_resource type="AnimationNodeBlendTree" id=21]
+[sub_resource type="AnimationNodeBlendTree" id=8]
 graph_offset = Vector2( -264.8, 101.6 )
-nodes/IdleDown/node = SubResource( 19 )
+nodes/IdleDown/node = SubResource( 6 )
 nodes/IdleDown/position = Vector2( -128, 160 )
-nodes/Speed/node = SubResource( 20 )
+nodes/Speed/node = SubResource( 7 )
 nodes/Speed/position = Vector2( 80, 144 )
 node_connections = [ "output", 0, "Speed", "Speed", 0, "IdleDown" ]
 
-[sub_resource type="AnimationNodeAnimation" id=42]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "IdleUp"
 
-[sub_resource type="AnimationNodeTimeScale" id=43]
+[sub_resource type="AnimationNodeTimeScale" id=10]
 
-[sub_resource type="AnimationNodeBlendTree" id=35]
+[sub_resource type="AnimationNodeBlendTree" id=11]
 graph_offset = Vector2( -178.4, 101.6 )
-nodes/IdleUp/node = SubResource( 42 )
+nodes/IdleUp/node = SubResource( 9 )
 nodes/IdleUp/position = Vector2( -80, 160 )
-nodes/Speed/node = SubResource( 43 )
+nodes/Speed/node = SubResource( 10 )
 nodes/Speed/position = Vector2( 144, 160 )
 node_connections = [ "output", 0, "Speed", "Speed", 0, "IdleUp" ]
 
-[sub_resource type="AnimationNodeAnimation" id=26]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "MoveDown"
 
-[sub_resource type="AnimationNodeTimeScale" id=27]
+[sub_resource type="AnimationNodeTimeScale" id=13]
 
-[sub_resource type="AnimationNodeBlendTree" id=22]
+[sub_resource type="AnimationNodeBlendTree" id=14]
 graph_offset = Vector2( -330.4, 97.6 )
-nodes/MoveDown/node = SubResource( 26 )
+nodes/MoveDown/node = SubResource( 12 )
 nodes/MoveDown/position = Vector2( -144, 176 )
-nodes/Speed/node = SubResource( 27 )
+nodes/Speed/node = SubResource( 13 )
 nodes/Speed/position = Vector2( 80, 128 )
 node_connections = [ "output", 0, "Speed", "Speed", 0, "MoveDown" ]
 
-[sub_resource type="AnimationNodeAnimation" id=23]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "MoveUp"
 
-[sub_resource type="AnimationNodeTimeScale" id=24]
+[sub_resource type="AnimationNodeTimeScale" id=16]
 
-[sub_resource type="AnimationNodeBlendTree" id=25]
+[sub_resource type="AnimationNodeBlendTree" id=17]
 graph_offset = Vector2( -449.6, 161 )
-nodes/MoveUp/node = SubResource( 23 )
+nodes/MoveUp/node = SubResource( 15 )
 nodes/MoveUp/position = Vector2( -176, 160 )
-nodes/Speed/node = SubResource( 24 )
+nodes/Speed/node = SubResource( 16 )
 nodes/Speed/position = Vector2( 64, 144 )
 node_connections = [ "output", 0, "Speed", "Speed", 0, "MoveUp" ]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=28]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=29]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=32]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=33]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=36]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=37]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=38]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=39]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=40]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=41]
-
-[sub_resource type="AnimationNodeStateMachine" id=4]
-states/IdleDown/node = SubResource( 21 )
+[sub_resource type="AnimationNodeStateMachine" id=30]
+states/IdleDown/node = SubResource( 8 )
 states/IdleDown/position = Vector2( -55, 37.72 )
-states/IdleUp/node = SubResource( 35 )
+states/IdleUp/node = SubResource( 11 )
 states/IdleUp/position = Vector2( -155.2, 117 )
-states/MoveDown/node = SubResource( 22 )
+states/MoveDown/node = SubResource( 14 )
 states/MoveDown/position = Vector2( 156, 214.4 )
-states/MoveUp/node = SubResource( 25 )
+states/MoveUp/node = SubResource( 17 )
 states/MoveUp/position = Vector2( 233.6, 75.2 )
-transitions = [ "IdleDown", "MoveUp", SubResource( 28 ), "MoveUp", "IdleDown", SubResource( 29 ), "MoveUp", "MoveDown", SubResource( 30 ), "MoveDown", "MoveUp", SubResource( 31 ), "MoveDown", "IdleDown", SubResource( 32 ), "IdleDown", "MoveDown", SubResource( 33 ), "IdleUp", "IdleDown", SubResource( 36 ), "IdleDown", "IdleUp", SubResource( 37 ), "IdleUp", "MoveDown", SubResource( 38 ), "MoveDown", "IdleUp", SubResource( 39 ), "IdleUp", "MoveUp", SubResource( 40 ), "MoveUp", "IdleUp", SubResource( 41 ) ]
+transitions = [ "IdleDown", "MoveUp", SubResource( 18 ), "MoveUp", "IdleDown", SubResource( 19 ), "MoveUp", "MoveDown", SubResource( 20 ), "MoveDown", "MoveUp", SubResource( 21 ), "MoveDown", "IdleDown", SubResource( 22 ), "IdleDown", "MoveDown", SubResource( 23 ), "IdleUp", "IdleDown", SubResource( 24 ), "IdleDown", "IdleUp", SubResource( 25 ), "IdleUp", "MoveDown", SubResource( 26 ), "MoveDown", "IdleUp", SubResource( 27 ), "IdleUp", "MoveUp", SubResource( 28 ), "MoveUp", "IdleUp", SubResource( 29 ) ]
 start_node = "IdleDown"
 graph_offset = Vector2( -318, -36 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=31]
 
-[sub_resource type="CapsuleShape2D" id=6]
+[sub_resource type="CapsuleShape2D" id=32]
 radius = 11.4393
 height = 5.36532
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=33]
 radius = 21.3369
+
+[sub_resource type="CapsuleShape2D" id=34]
+radius = 8.33424
+height = 7.86999
 
 [node name="Grandma" type="KinematicBody2D"]
 collision_layer = 2
@@ -250,15 +254,15 @@ rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/IdleDown = SubResource( 8 )
-anims/IdleUp = SubResource( 34 )
-anims/MoveDown = SubResource( 9 )
-anims/MoveUp = SubResource( 10 )
+anims/IdleDown = SubResource( 2 )
+anims/IdleUp = SubResource( 3 )
+anims/MoveDown = SubResource( 4 )
+anims/MoveUp = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 4 )
+tree_root = SubResource( 30 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 5 )
+parameters/playback = SubResource( 31 )
 parameters/IdleDown/Speed/scale = 1.0
 parameters/IdleUp/Speed/scale = 1.0
 parameters/MoveDown/Speed/scale = 1.0
@@ -271,7 +275,7 @@ collision_mask = 0
 
 [node name="CollisionShape" parent="GroceryHurtbox" index="0"]
 position = Vector2( -3.8147e-06, -11.4581 )
-shape = SubResource( 6 )
+shape = SubResource( 32 )
 
 [node name="GoalHurtbox" parent="." instance=ExtResource( 5 )]
 visible = false
@@ -280,10 +284,21 @@ collision_mask = 0
 
 [node name="CollisionShape" parent="GoalHurtbox" index="0"]
 position = Vector2( 0.260418, -11.5449 )
-shape = SubResource( 7 )
+shape = SubResource( 33 )
+
+[node name="GranHurtbox" parent="." instance=ExtResource( 5 )]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape" parent="GranHurtbox" index="0"]
+position = Vector2( 0, -12 )
+shape = SubResource( 34 )
 [connection signal="area_entered" from="GroceryHurtbox" to="." method="_on_GroceryHurtbox_area_entered"]
 [connection signal="area_entered" from="GoalHurtbox" to="." method="_on_GoalHurtbox_area_entered"]
+[connection signal="area_entered" from="GranHurtbox" to="." method="_on_GranHurtbox_area_entered"]
 
 [editable path="GroceryHurtbox"]
 
 [editable path="GoalHurtbox"]
+
+[editable path="GranHurtbox"]
