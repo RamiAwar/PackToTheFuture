@@ -12,15 +12,18 @@ onready var house_position = Vector2(0, 0)
 var has_groceries:bool = false
 
 var boss: Control
-
+signal reset_hoard_timer
 
 func end_day():
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
+	emit_signal("reset_hoard_timer")
+	
 
 func end_life():
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
+	emit_signal("reset_hoard_timer")
 
 func get_arrow():
 	if has_groceries:
