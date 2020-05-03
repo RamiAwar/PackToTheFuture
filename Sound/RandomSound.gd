@@ -6,8 +6,10 @@ export var NumberOfSources = 4
 export var number_of_samples = 3
 
 var index = 0;
-export var transition_duration = 1
+export var transition_duration = 0.6
 export var transition_type = 1 # SINE
+
+export var volume = -20
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,7 +19,7 @@ func _ready():
 		var tween = Tween.new()
 		tween.connect("tween_completed", self, "_on_Tween_completed")
 
-		player.volume_db = -20
+		player.volume_db = volume
 		add_child(player)
 		add_child(tween)
 		

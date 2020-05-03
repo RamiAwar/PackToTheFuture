@@ -12,6 +12,7 @@ onready var animation_state = animation_tree.get("parameters/playback")
 
 var angle 
 var target: Vector2
+var facing_up: bool
 
 func _ready():
 	animation_tree.active = true
@@ -24,7 +25,29 @@ func _ready():
 
 func _physics_process(delta):
 	
+	target = (get_global_mouse_position() - global_position).normalized()
+
+	angle = atan2(target.y, abs(target.x))
+
 	
+	update()
+	
+	if facing_up:
+		show_behind_parent = true
+	else:
+		show_behind_parent = false
+
+		
+
+
+	if target.x < 0:
+		scale.x = 1
+		
+		rotation = -angle
+
+	else:
+		scale.x = -1
+		rotation = angle
 	
 	match gun_state:
 		
@@ -37,6 +60,7 @@ func _physics_process(delta):
 func IdleState():
 	
 	if Input.is_action_just_pressed("attack"):
+	
 		gun_state = states.SHOOT
 		animation_state.travel("Shoot");
 		$Emitter.trigger()

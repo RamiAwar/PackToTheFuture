@@ -15,6 +15,8 @@ var walker_spawn_chance = 0.2
 var walker_max_streak = 4
 var walker_max_count = 3
 var max_fill_percent = 0.4
+var tree_spawn_chance = 0.06
+var bush_spawn_chance = 0.12
 
 var minimum_shop_distance = 28
 
@@ -29,7 +31,10 @@ const Tiles = {
 	'wall': 0,
 	'floor': 1,
 	'dirt': 2,
-	'invisible': 3,
+	'house': 3,
+	'tree': 4,
+	'bush': 5,
+	'shrub': 6,
 	'empty': -1
 }
 	
@@ -50,7 +55,7 @@ var character: KinematicBody2D;
 var house: StaticBody2D;
 var container: YSort;
 var shop: StaticBody2D;
-var random_placer:Node2D
+var random_placer:YSort
 
 func _ready():
 	
@@ -286,21 +291,26 @@ func _post_processing():
 		for y in HEIGHT:
 			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT - 1:
 				continue			
-			if grid[x][y] != Tiles.empty and grid_copy[x][y].y >= 2:
+			if grid[x][y] == Tiles.floor and grid_copy[x][y].y >= 2:
 				# Make sure it is not a single tile
 				grid[x][y] = Tiles.dirt
-	
-	for x in WIDTH:
-		for y in HEIGHT:
-			if x == 0 or y == 0 or x == WIDTH - 1 or y == HEIGHT - 1:
-				continue
-				
-			if grid[x][y] == Tiles.floor or grid[x][y] == Tiles.dirt:
-				invisible_tilemap.set_cellv(Vector2(x, y), 0)
 				
 	# Remove single walls and setup for dirt tiles
 	_remove_diagonals(Tiles.dirt)
 	_remove_singles(Tiles.dirt)
+	
+	
+	# Place trees
+	_generate_item("place_tree", Tiles.tree, 7, 25)
+	_generate_item("place_bush", Tiles.bush, 3, 35)
+	_generate_item("place_shrub", Tiles.shrub, 2, 40)
+	_generate_item("place_flower", Tiles.flower, 2, 40)
+	
+	
+	_remove_diagonals(Tiles.dirt)
+	_remove_singles(Tiles.dirt)
+	_remove_diagonals(Tiles.dirt)
+	
 	
 func _spawn_tiles():
 	for x in WIDTH:
@@ -310,9 +320,17 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						pass
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						
+					Tiles.house:
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);
+#						debug_tilemap.set_cellv(Vector2(x, y), 0)
+												
 					Tiles.dirt:
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
@@ -320,9 +338,6 @@ func _spawn_tiles():
 						
 					Tiles.wall:	
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
-						
-					Tiles.invisible:
-						invisible_tilemap.set_cellv(Vector2(x, y), 0)
 						
 			else:
 				debug_tilemap.set_cellv(Vector2(x, y), 0);
@@ -420,5 +435,77 @@ func _place_house(position, size):
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
 			grid[next_pos.x][next_pos.y] = Tiles.floor
+			if x != 0 and y != 0 and x != size-1 and y != size-1:
+				grid[next_pos.x][next_pos.y] = Tiles.house
+				
 	return top_left
 	
+	
+
+func _check_placeable(z):
+	var x = z.x
+	var y = z.y
+	var quad = [[1,1],[1,0],[0,1], [0,0]]
+	var placeable = true
+	if x <= 0 or y <= 0 or x >= WIDTH-1 or y >= HEIGHT-1:
+		return false
+		
+	for q in quad:
+		if grid[x+q[0]][y+q[1]] != Tiles.floor and grid[x+q[0]][y+q[1]] != Tiles.dirt:
+			placeable = false
+	return placeable
+	
+func _generate_random_point_around(point, min_dist):
+	var r1 = Random.rng.randf()
+	var r2 = Random.rng.randf()
+	var radius = min_dist*(r1 + 1)
+	var angle = 2*PI*r2
+	return Vector2(point.x + radius*cos(angle), point.y + radius*sin(angle))
+	
+func _in_neighborhood(new_point, min_dist, item):
+	for x in range(min_dist*2):
+		for y in range(min_dist*2):
+			if new_point.x + x - min_dist> 0 and new_point.x + x- min_dist < WIDTH-1 and new_point.y + y - min_dist> 0 and new_point.y + y - min_dist< HEIGHT-1:
+				if grid[ int(new_point.x) + x - min_dist][ int(new_point.y) + y - min_dist] == item:
+					return true
+	return false
+	
+func _generate_item(method, item, min_dist, n_points):
+
+	var queue = []
+#	var sample_points = []
+	var start_position =  Vector2(Random.rng.randi()%(WIDTH-2) + 1,
+									Random.rng.randi()%(HEIGHT-2) + 1)
+	
+	# Generate first point randomly
+	while !_check_placeable(start_position):
+		start_position = Vector2(Random.rng.randi()%(WIDTH-2) + 1,
+									Random.rng.randi()%(HEIGHT-2) + 1)
+									
+	# Guaranteed placeable point
+	queue.append(start_position)
+#	sample_points.append(start_position)
+	grid[start_position.x][start_position.y] = item
+	
+	while not queue.empty():
+		
+		# Select random element
+		var random_index = Random.rng.randi()%queue.size()
+		var point = queue[random_index]
+		queue.remove(random_index)
+		
+		for i in range(n_points):
+			var new_point = _generate_random_point_around(point, min_dist);
+			
+			# Check that point is in grid and placeable
+			if(_check_placeable(new_point) and not _in_neighborhood(new_point, min_dist, item)):
+				queue.append(new_point);
+#				sample_points.append(new_point);
+				for x in range(5):
+					for y in range(5):
+						if new_point.x + x > 0 and new_point.x + x < WIDTH-1 and new_point.y + y > 0 and new_point.y + y < HEIGHT-1:
+							if grid[new_point.x + x - 2][new_point.y + y - 2] == Tiles.dirt:
+								grid[new_point.x + x - 2][new_point.y + y - 2] = Tiles.floor
+				grid[new_point.x][new_point.y] = item
+				
+				random_placer.call(method, new_point*CellSize + CellSize/2)

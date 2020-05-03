@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Sound/assets/Whoosh-master.wav" type="AudioStream" id=1]
 [ext_resource path="res://Sound/SoundManager.gd" type="Script" id=2]
@@ -12,8 +12,10 @@
 [ext_resource path="res://Sound/assets/boomerang_effect.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sound/RandomSound.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Sound/assets/boomerang_effect_2.wav" type="AudioStream" id=12]
-[ext_resource path="res://Sound/assets/slap.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sound/assets/slipper_wall.wav" type="AudioStream" id=13]
 [ext_resource path="res://Sound/assets/scooby_laugh.wav" type="AudioStream" id=14]
+[ext_resource path="res://Sound/assets/background_loop.wav" type="AudioStream" id=15]
+[ext_resource path="res://Sound/assets/slap.wav" type="AudioStream" id=16]
 
 [node name="SoundManager" type="Node"]
 pause_mode = 2
@@ -43,13 +45,9 @@ stream = ExtResource( 14 )
 stream = ExtResource( 5 )
 volume_db = -25.0
 
-[node name="Bush" type="AudioStreamPlayer" parent="Objects"]
-stream = ExtResource( 6 )
-volume_db = -6.0
-
 [node name="Tree" type="AudioStreamPlayer" parent="Objects"]
 stream = ExtResource( 7 )
-volume_db = -6.0
+volume_db = 2.937
 
 [node name="TreeTrunkCreak" type="AudioStreamPlayer" parent="Objects"]
 stream = ExtResource( 8 )
@@ -72,6 +70,15 @@ stream = ExtResource( 12 )
 [node name="Slipper3" type="AudioStreamPlayer" parent="Objects/Slipper"]
 stream = ExtResource( 10 )
 
+[node name="Hit" type="Node" parent="Objects"]
+
+[node name="RandomHit" parent="Objects/Hit" instance=ExtResource( 11 )]
+number_of_samples = 1
+
+[node name="SlipperHit" type="AudioStreamPlayer" parent="Objects/Hit"]
+stream = ExtResource( 16 )
+volume_db = -8.126
+
 [node name="Wall" type="Node" parent="Objects"]
 
 [node name="WallRandom" parent="Objects/Wall" instance=ExtResource( 11 )]
@@ -79,3 +86,19 @@ number_of_samples = 1
 
 [node name="WallHit1" type="AudioStreamPlayer" parent="Objects/Wall"]
 stream = ExtResource( 13 )
+volume_db = -15.6
+
+[node name="Bush" type="Node" parent="Objects"]
+
+[node name="RandomBush" parent="Objects/Bush" instance=ExtResource( 11 )]
+number_of_samples = 1
+volume = 0
+
+[node name="Bush" type="AudioStreamPlayer" parent="Objects/Bush"]
+stream = ExtResource( 6 )
+volume_db = 3.749
+
+[node name="BackgroundLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -33.313
+autoplay = true
