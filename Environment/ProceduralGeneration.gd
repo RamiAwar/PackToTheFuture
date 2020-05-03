@@ -15,6 +15,8 @@ var walker_spawn_chance = 0.2
 var walker_max_streak = 4
 var walker_max_count = 3
 var max_fill_percent = 0.4
+var tree_spawn_chance = 0.06
+var bush_spawn_chance = 0.12
 
 var minimum_shop_distance = 28
 
@@ -29,7 +31,9 @@ const Tiles = {
 	'wall': 0,
 	'floor': 1,
 	'dirt': 2,
-	'invisible': 3,
+	'house': 3,
+	'tree': 4,
+	'bush': 5,
 	'empty': -1
 }
 	
@@ -286,21 +290,35 @@ func _post_processing():
 		for y in HEIGHT:
 			if x == 0 or y == 0 or x == WIDTH-1 or y == HEIGHT - 1:
 				continue			
-			if grid[x][y] != Tiles.empty and grid_copy[x][y].y >= 2:
+			if grid[x][y] == Tiles.floor and grid_copy[x][y].y >= 2:
 				# Make sure it is not a single tile
 				grid[x][y] = Tiles.dirt
-	
-	for x in WIDTH:
-		for y in HEIGHT:
-			if x == 0 or y == 0 or x == WIDTH - 1 or y == HEIGHT - 1:
-				continue
-				
-			if grid[x][y] == Tiles.floor or grid[x][y] == Tiles.dirt:
-				invisible_tilemap.set_cellv(Vector2(x, y), 0)
 				
 	# Remove single walls and setup for dirt tiles
 	_remove_diagonals(Tiles.dirt)
 	_remove_singles(Tiles.dirt)
+	
+	
+	# Place trees
+	var quad = [[1,1],[1,0],[0,1],[1,2],[2,1],[0,2],[2,2],[2,0]]
+	for x in WIDTH-2:
+		for y in HEIGHT-2:
+			var placeable = true
+			for q in quad:
+				if grid[x+q[0]][y+q[1]] != Tiles.floor and grid[x+q[0]][y+q[1]] != Tiles.dirt:
+					placeable = false
+			if placeable and Random.rng.randf() < tree_spawn_chance:
+				random_placer.place_tree(Vector2(x+1, y+1)*CellSize)
+				grid[x][y] = Tiles.tree
+				grid[x+1][y+1] = Tiles.tree
+			elif placeable and Random.rng.randf() < bush_spawn_chance:
+				random_placer.place_bush(Vector2(x+1, y+1)*CellSize)
+				grid[x][y] = Tiles.tree
+				grid[x+1][y+1] = Tiles.tree
+	
+	_remove_diagonals(Tiles.dirt)
+	_remove_singles(Tiles.dirt)
+	
 	
 func _spawn_tiles():
 	for x in WIDTH:
@@ -310,9 +328,17 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						pass
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						
+					Tiles.house:
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
+						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2 + 1), 0);
+#						debug_tilemap.set_cellv(Vector2(x, y), 0)
+												
 					Tiles.dirt:
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
@@ -320,9 +346,6 @@ func _spawn_tiles():
 						
 					Tiles.wall:	
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
-						
-					Tiles.invisible:
-						invisible_tilemap.set_cellv(Vector2(x, y), 0)
 						
 			else:
 				debug_tilemap.set_cellv(Vector2(x, y), 0);
@@ -420,5 +443,8 @@ func _place_house(position, size):
 		for y in size:
 			var next_pos = Vector2(top_left.x + x, top_left.y + y);
 			grid[next_pos.x][next_pos.y] = Tiles.floor
+			if x != 0 and y != 0 and x != size-1 and y != size-1:
+				grid[next_pos.x][next_pos.y] = Tiles.house
+				
 	return top_left
 	

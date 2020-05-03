@@ -3,8 +3,8 @@ extends Node2D
 export var CellSize: Vector2 = Vector2(32, 32);
 
 
-export var WIDTH:int = 1024/CellSize.x	
-export var HEIGHT:int = 1024/CellSize.y
+export var WIDTH:int = 2048/CellSize.x	
+export var HEIGHT:int = 2048/CellSize.y
 
 
 export (float) var max_iterations = 100000
