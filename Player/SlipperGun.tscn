@@ -3,7 +3,7 @@
 [ext_resource path="res://Player/ParticleEmitter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Slipper.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player/SlipperGun.gd" type="Script" id=3]
-[ext_resource path="res://Player/grandma_arm.png" type="Texture" id=4]
+[ext_resource path="res://Player/grandma_hand.png" type="Texture" id=4]
 [ext_resource path="res://Player/slipper.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [ 30.0 ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -91,18 +91,19 @@ z_as_relative = false
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
-rotation = 6.28319
+position = Vector2( -0.0913773, 0.0913773 )
+rotation = 0.523599
 texture = ExtResource( 4 )
-offset = Vector2( 5.272, -1.017 )
+offset = Vector2( -0.91, -0.477 )
 
 [node name="Sprite2" type="Sprite" parent="Sprite"]
-position = Vector2( 10.4209, -4.83568 )
-rotation = 1.14843
-scale = Vector2( 0.875044, 0.875044 )
+position = Vector2( -4.55296, -9.65839 )
+rotation = 0.492183
+scale = Vector2( 1.25, 1.25 )
 texture = ExtResource( 5 )
 
 [node name="Emitter" parent="." instance=ExtResource( 1 )]
-position = Vector2( 20, 0 )
+position = Vector2( -12.4406, 0.215736 )
 Scene = ExtResource( 2 )
 color = Color( 1, 0, 0, 0 )
 

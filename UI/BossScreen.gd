@@ -7,6 +7,7 @@ func trigger():
 	visible = true
 	get_tree().paused = true
 	$Timer.start()
+	$Timer2.start()
 	$AnimationPlayer.play("idle")
 
 #func _input(_event):
@@ -17,3 +18,7 @@ func trigger():
 func _on_Timer_timeout():
 	get_tree().paused = false
 	visible = false
+
+
+func _on_Timer2_timeout():
+	SoundManager.get_node("Enemies/ProfessorLaugh").play()

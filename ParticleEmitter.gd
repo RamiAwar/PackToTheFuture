@@ -32,7 +32,7 @@ func _physics_process(_delta):
 	pass
 	
 
-func trigger(angle):
+func trigger():
 	
 	#if n_particles == 0:
 	#	return
