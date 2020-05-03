@@ -1,7 +1,7 @@
 [gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=1]
-[ext_resource path="res://NPCs/woman.png" type="Texture" id=2]
+[ext_resource path="res://NPCs/policeman.png" type="Texture" id=2]
 [ext_resource path="res://Boxes/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Boxes/SoftCollision.tscn" type="PackedScene" id=4]
 [ext_resource path="res://NPCs/WanderController.tscn" type="PackedScene" id=5]
@@ -15,39 +15,24 @@
 radius = 4.60988
 height = 6.95673
 
-[sub_resource type="AnimationNodeAnimation" id=2]
-animation = "WalkDown"
+[sub_resource type="Animation" id=2]
+resource_name = "WalkDown"
+length = 0.9
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 10, 11, 12, 13, 14, 15, 16, 17, 9 ]
+}
 
-[sub_resource type="AnimationNodeAnimation" id=3]
-animation = "WalkUp"
-
-[sub_resource type="AnimationNodeAnimation" id=4]
-animation = "WalkDown"
-
-[sub_resource type="AnimationNodeAnimation" id=5]
-animation = "WalkDown"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=6]
-blend_point_0/node = SubResource( 2 )
-blend_point_0/pos = Vector2( 0, 1.1 )
-blend_point_1/node = SubResource( 3 )
-blend_point_1/pos = Vector2( 0, -1.1 )
-blend_point_2/node = SubResource( 4 )
-blend_point_2/pos = Vector2( 1, 0 )
-blend_point_3/node = SubResource( 5 )
-blend_point_3/pos = Vector2( -1, 0 )
-min_space = Vector2( -1, -1.1 )
-max_space = Vector2( 1, 1.1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeStateMachine" id=7]
-states/Walk/node = SubResource( 6 )
-states/Walk/position = Vector2( 515, 76 )
-start_node = "Walk"
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
-
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=3]
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -63,21 +48,37 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
 }
 
-[sub_resource type="Animation" id=10]
-length = 0.9
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 10, 11, 12, 13, 14, 15, 16, 17, 9 ]
-}
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "WalkDown"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "WalkUp"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "WalkDown"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "WalkDown"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=8]
+blend_point_0/node = SubResource( 4 )
+blend_point_0/pos = Vector2( 0, 1.1 )
+blend_point_1/node = SubResource( 5 )
+blend_point_1/pos = Vector2( 0, -1.1 )
+blend_point_2/node = SubResource( 6 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 7 )
+blend_point_3/pos = Vector2( -1, 0 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/Walk/node = SubResource( 8 )
+states/Walk/position = Vector2( 515, 76 )
+start_node = "Walk"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 [sub_resource type="CircleShape2D" id=11]
 radius = 107.0
@@ -94,36 +95,35 @@ height = 9.19535
 radius = 4.02997
 height = 9.27637
 
-[node name="Woman" type="KinematicBody2D"]
+[node name="Police" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 7 )
 WANDER_TARGET_RANGE = 4
 
 [node name="Speech" parent="." instance=ExtResource( 9 )]
-position = Vector2( -1.60933e-06, -34.8679 )
-scale = Vector2( 0.658024, 0.646232 )
-offset = Vector2( 0, 0 )
+position = Vector2( -1.1697, -33.3309 )
+scale = Vector2( 0.551894, 0.445763 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -12 )
 texture = ExtResource( 2 )
 hframes = 18
-frame = 1
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 rotation = -1.5708
 shape = SubResource( 1 )
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 7 )
-anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 8 )
-parameters/Walk/blend_position = Vector2( 0.000662684, 0 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/WalkDown = SubResource( 9 )
-anims/WalkUp = SubResource( 10 )
+anims/WalkDown = SubResource( 2 )
+anims/WalkUp = SubResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource( 10 )
+parameters/Walk/blend_position = Vector2( 0.000662684, 0 )
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
 
@@ -162,9 +162,9 @@ max_health = 2
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 10 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="no_health" from="Stats" to="Speech" method="set_angry"]
 [connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="no_health" from="Stats" to="Timer" method="_on_Stats_no_health"]
+[connection signal="no_health" from="Stats" to="Speech" method="set_angry"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="PlayerDetectionZone"]
