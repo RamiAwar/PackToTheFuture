@@ -164,8 +164,8 @@ max_health = 2
 [node name="Timer" type="Timer" parent="."]
 script = ExtResource( 10 )
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="no_health" from="Stats" to="Speech" method="set_angry"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="no_health" from="Stats" to="Timer" method="_on_Stats_no_health"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
