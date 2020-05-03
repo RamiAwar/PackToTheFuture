@@ -58,7 +58,6 @@ scale = Vector2( 0.782587, 0.729449 )
 texture = ExtResource( 2 )
 
 [node name="GroceryHitbox" parent="." instance=ExtResource( 3 )]
-collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" parent="GroceryHitbox" index="0"]
