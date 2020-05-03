@@ -42,12 +42,12 @@ func _ready():
 	
 	ProceduralGeneration._generate_world($WallTileMap, $DirtTileMap, $DebugTileMap, $Navigation2D/InvisibleTileMap, $FlowerTileMap)
 	
-	
 	GameManager.boss = $CanvasLayer/BossScreen
 	GameManager.nav_2d = $Navigation2D
 	GameManager.random_placer = $YSort/RandomPlacer
 	
 	GameManager.day_label = $CanvasLayer/Day
+	$CanvasLayer/Day.text = "1"
 	
 func _input(event):
 

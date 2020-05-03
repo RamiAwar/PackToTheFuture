@@ -334,7 +334,7 @@ func _post_processing():
 	_remove_diagonals(Tiles.dirt)
 	_remove_diagonals(Tiles.dirt)
 	
-	
+	place_professor(last_position)
 
 	
 	
@@ -346,7 +346,7 @@ func _spawn_tiles():
 				match tile_index:
 					
 					Tiles.floor:
-						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF);
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						
 					Tiles.house:
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
@@ -356,7 +356,7 @@ func _spawn_tiles():
 #						debug_tilemap.set_cellv(Vector2(x, y), 0)
 												
 					Tiles.dirt:
-						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF);
+						invisible_tilemap.set_cellv(Vector2(x, y), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2 + 1, y*2), 0);
 						dirt_tilemap.set_cellv(Vector2(x*2, y*2 + 1), 0);
@@ -366,11 +366,11 @@ func _spawn_tiles():
 						wall_tilemap.set_cellv(Vector2(x, y), 0);
 						
 					Tiles.flower:
-						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF)
+						invisible_tilemap.set_cellv(Vector2(x, y), 0)
 						flower_tilemap.set_cellv(Vector2(x, y), 0);
 					
 					Tiles.shrub:
-						invisible_tilemap.set_cellv(Vector2(x, y), TILEMAP_DEBUG_OFF)
+						invisible_tilemap.set_cellv(Vector2(x, y), 0)
 			else:
 #				debug_tilemap.set_cellv(Vector2(x, y), 0);
 				wall_tilemap.set_cellv(Vector2(x, y), 0);
@@ -630,7 +630,7 @@ func place_professor(position):
 									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
 
 	# Generate first point randomly
-	while (not _check_placeable2(start_position) or (start_position - position).length() < 10):
+	while (not _check_placeable2(start_position) or (start_position*CellSize - position).length() < 10):
 		start_position = Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
 									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
 									
