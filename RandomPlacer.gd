@@ -3,8 +3,6 @@ extends Node2D
 export (PackedScene) var houseA
 export (PackedScene) var foodA
 
-
-
 func place_house(location):
 	var house = houseA.instance()
 	house.global_position = location

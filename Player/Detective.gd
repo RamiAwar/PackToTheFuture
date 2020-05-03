@@ -137,8 +137,9 @@ func MoveState(delta):
 		# Steer player velocity to zero with stopping friction
 		player_velocity = player_velocity.move_toward(Vector2.ZERO, FRICTION*delta)
 		
-		if last_input.x < 0:
+		if last_input.y < 0:
 			animation_state.travel("IdleUp")
+		else:
 			animation_state.travel("IdleDown")
 		
 #	if !OS_MOBILE and Input.is_action_just_pressed("mouse_attack"):

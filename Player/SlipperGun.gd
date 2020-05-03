@@ -24,42 +24,7 @@ func _ready():
 
 func _physics_process(delta):
 	
-	target = (get_global_mouse_position() - global_position).normalized()
-
-	angle = atan2(target.y, abs(target.x))
-
 	
-	update()
-
-	if target.x < 0:
-#		scale.x = -1
-		
-		show_behind_parent = false
-		
-#		$Sprite/Sprite2.flip_h = true
-#		$Sprite/Sprite2.rotation_degrees = -75
-#		$Sprite/Sprite2.position.x = -11.6*$Sprite/Sprite2.scale.x
-		
-#		$Sprite.flip_h = true
-#		$Sprite.offset.x = -4.6*$Sprite.scale.x
-
-#		$Emitter.position.x = -20*$Sprite.scale.x
-		
-		rotation = -angle
-
-	else:
-
-		show_behind_parent = true
-#		$Sprite/Sprite2.rotation_degrees = 65.8
-#		$Sprite/Sprite2.position.x = 11.6*$Sprite/Sprite2.scale.x
-#		$Sprite/Sprite2.flip_h = false
-		
-#		$Sprite.offset.x = 4.6*$Sprite.scale.x
-#		$Sprite.flip_h = false
-		
-#		$Emitter.position.x =  20*$Sprite.scale.x
-
-		rotation = angle
 	
 	match gun_state:
 		

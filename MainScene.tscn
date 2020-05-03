@@ -176,6 +176,3 @@ limit_top = 0
 limit_right = 2048
 limit_bottom = 2048
 smoothing_speed = 10.0
-
-[node name="Man" parent="." instance=ExtResource( 21 )]
-position = Vector2( 382.885, 153.456 )

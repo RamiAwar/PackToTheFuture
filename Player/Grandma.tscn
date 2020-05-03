@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Player/grandma.png" type="Texture" id=1]
 [ext_resource path="res://Player/Detective.gd" type="Script" id=2]
@@ -11,7 +11,7 @@ radius = 2.23157
 height = 10.7571
 
 [sub_resource type="Animation" id=8]
-resource_name = "Idle"
+resource_name = "IdleDown"
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -25,6 +25,47 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 18, 19, 20 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SlipperGun:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -3.99393, -6.49841 ), Vector2( -4.28247, -5.44042 ), Vector2( -4.90765, -6.16178 ) ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "IdleUp"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 21, 22, 23 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SlipperGun:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -3.76074, -6.48347 ), Vector2( -3.82136, -7.27151 ), Vector2( -3.6092, -8.99913 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -43,6 +84,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 9, 10, 11, 12, 13, 14, 15, 16 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("SlipperGun:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -3.99393, -6.20987 ), Vector2( -3.80157, -7.65259 ), Vector2( -3.63669, -6.29231 ), Vector2( -4.75422, -4.73967 ), Vector2( -4.4098, -5.41844 ), Vector2( -5.17146, -8.02083 ), Vector2( -4.77895, -7.03245 ), Vector2( -4.96353, -5.17844 ) ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "MoveUp"
@@ -60,19 +113,44 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("SlipperGun:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -4.48262, -6.62116 ), Vector2( -3.90554, -6.81352 ), Vector2( -3.97767, -5.25058 ), Vector2( -3.76126, -4.38839 ), Vector2( -3.88149, -5.24142 ), Vector2( -3.80935, -7.72954 ), Vector2( -3.59294, -6.58681 ), Vector2( -3.8895, -4.67464 ), Vector2( -3.5128, -4.97463 ) ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=19]
-animation = "Idle"
+animation = "IdleDown"
 
 [sub_resource type="AnimationNodeTimeScale" id=20]
 
 [sub_resource type="AnimationNodeBlendTree" id=21]
 graph_offset = Vector2( -264.8, 101.6 )
-nodes/Idle/node = SubResource( 19 )
-nodes/Idle/position = Vector2( -128, 160 )
+nodes/IdleDown/node = SubResource( 19 )
+nodes/IdleDown/position = Vector2( -128, 160 )
 nodes/Speed/node = SubResource( 20 )
 nodes/Speed/position = Vector2( 80, 144 )
-node_connections = [ "output", 0, "Speed", "Speed", 0, "Idle" ]
+node_connections = [ "output", 0, "Speed", "Speed", 0, "IdleDown" ]
+
+[sub_resource type="AnimationNodeAnimation" id=42]
+animation = "IdleUp"
+
+[sub_resource type="AnimationNodeTimeScale" id=43]
+
+[sub_resource type="AnimationNodeBlendTree" id=35]
+graph_offset = Vector2( -178.4, 101.6 )
+nodes/IdleUp/node = SubResource( 42 )
+nodes/IdleUp/position = Vector2( -80, 160 )
+nodes/Speed/node = SubResource( 43 )
+nodes/Speed/position = Vector2( 144, 160 )
+node_connections = [ "output", 0, "Speed", "Speed", 0, "IdleUp" ]
 
 [sub_resource type="AnimationNodeAnimation" id=26]
 animation = "MoveDown"
@@ -112,16 +190,30 @@ node_connections = [ "output", 0, "Speed", "Speed", 0, "MoveUp" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
 [sub_resource type="AnimationNodeStateMachine" id=4]
-states/Idle/node = SubResource( 21 )
-states/Idle/position = Vector2( -85.4, 48.12 )
+states/IdleDown/node = SubResource( 21 )
+states/IdleDown/position = Vector2( -55, 37.72 )
+states/IdleUp/node = SubResource( 35 )
+states/IdleUp/position = Vector2( -155.2, 117 )
 states/MoveDown/node = SubResource( 22 )
-states/MoveDown/position = Vector2( 76.8, 154.4 )
+states/MoveDown/position = Vector2( 156, 214.4 )
 states/MoveUp/node = SubResource( 25 )
 states/MoveUp/position = Vector2( 233.6, 75.2 )
-transitions = [ "Idle", "MoveUp", SubResource( 28 ), "MoveUp", "Idle", SubResource( 29 ), "MoveUp", "MoveDown", SubResource( 30 ), "MoveDown", "MoveUp", SubResource( 31 ), "MoveDown", "Idle", SubResource( 32 ), "Idle", "MoveDown", SubResource( 33 ) ]
-start_node = "Idle"
-graph_offset = Vector2( -233, -6 )
+transitions = [ "IdleDown", "MoveUp", SubResource( 28 ), "MoveUp", "IdleDown", SubResource( 29 ), "MoveUp", "MoveDown", SubResource( 30 ), "MoveDown", "MoveUp", SubResource( 31 ), "MoveDown", "IdleDown", SubResource( 32 ), "IdleDown", "MoveDown", SubResource( 33 ), "IdleUp", "IdleDown", SubResource( 36 ), "IdleDown", "IdleUp", SubResource( 37 ), "IdleUp", "MoveDown", SubResource( 38 ), "MoveDown", "IdleUp", SubResource( 39 ), "IdleUp", "MoveUp", SubResource( 40 ), "MoveUp", "IdleUp", SubResource( 41 ) ]
+start_node = "IdleDown"
+graph_offset = Vector2( -318, -36 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=5]
 
@@ -144,11 +236,12 @@ scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -32 )
-hframes = 21
-frame = 20
+hframes = 24
+frame = 7
 
 [node name="SlipperGun" parent="." instance=ExtResource( 4 )]
-position = Vector2( -3.6395, -7.93831 )
+position = Vector2( -3.8895, -4.67464 )
+rotation = -0.267035
 scale = Vector2( 0.8, 0.8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -157,7 +250,8 @@ rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Idle = SubResource( 8 )
+anims/IdleDown = SubResource( 8 )
+anims/IdleUp = SubResource( 34 )
 anims/MoveDown = SubResource( 9 )
 anims/MoveUp = SubResource( 10 )
 
@@ -165,7 +259,8 @@ anims/MoveUp = SubResource( 10 )
 tree_root = SubResource( 4 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 5 )
-parameters/Idle/Speed/scale = 1.0
+parameters/IdleDown/Speed/scale = 1.0
+parameters/IdleUp/Speed/scale = 1.0
 parameters/MoveDown/Speed/scale = 1.0
 parameters/MoveUp/Speed/scale = 1.0
 
