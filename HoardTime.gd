@@ -5,6 +5,7 @@ onready var arr = [$LabelHoard, $Label1, $Label2, $Label3]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	GameManager.connect("reset_hoard_timer", self, "play_hoard")
+	play_hoard()
 
 func play_hoard():
 	get_tree().paused = true
