@@ -5,7 +5,7 @@ var scene_path_to_load
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$MarginContainer/VBoxContainer/NewGame.grab_focus()
+	$MarginContainer/VBoxContainer/Start.grab_focus()
 	pass
 
 
@@ -13,8 +13,8 @@ func _on_FadeIn_fade_finished():
 	get_tree().change_scene(scene_path_to_load)
 
 
-func _on_NewGame_pressed():
-	scene_path_to_load = $MarginContainer/VBoxContainer/NewGame.scene_to_load
+func _on_Start_pressed():
+	scene_path_to_load = "res://MainScene.tscn"
 	$FadeIn.show()
 	$FadeIn.fade_in()
 
