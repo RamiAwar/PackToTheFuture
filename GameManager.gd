@@ -14,6 +14,7 @@ onready var house_position = Vector2(0, 0)
 var number_of_professors = 1;
 
 var has_groceries:bool = false
+var grandma: KinematicBody2D
 
 var boss: Control
 signal reset_hoard_timer
@@ -36,13 +37,14 @@ func increment_variables():
 		ProceduralGeneration.min_dist_infected = 4;
 
 	ProceduralGeneration.lookaround_infected += 3;
-	number_of_professors = dayNum/5
+	number_of_professors = 1 + (dayNum/5)
 
 func reset_variables():
 	ProceduralGeneration.min_dist_infected = 10
 	ProceduralGeneration.lookaround_infected = 30
 	number_of_professors = 1
 	has_groceries = false
+	grandma._reset()
 	dayNum = 1
 	day_label.text = str(dayNum)
 
