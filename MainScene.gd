@@ -45,6 +45,7 @@ func _ready():
 	
 	GameManager.boss = $CanvasLayer/BossScreen
 	GameManager.nav_2d = $Navigation2D
+	GameManager.random_placer = $YSort/RandomPlacer
 	
 	
 	

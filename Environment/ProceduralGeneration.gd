@@ -20,7 +20,7 @@ var bush_spawn_chance = 0.12
 
 var minimum_shop_distance = 28
 
-var TILEMAP_DEBUG_OFF = 1
+var TILEMAP_DEBUG_OFF = 0
 
 # Walker class (saves direction and position)
 class Walker:
@@ -459,6 +459,9 @@ func _find_best_fit(size:int, position:Vector2):
 	
 	return top_left
 	
+	
+
+	
 func _place_house(position, size):
 	
 	# Clear tiles for house
@@ -615,3 +618,21 @@ func _generate_ai(method, min_dist, n_points, use_random_placer=true):
 				
 				if use_random_placer:
 					random_placer.call(method, new_point*CellSize + CellSize/2)
+
+
+
+func place_professor(position):
+
+	var queue = []
+	var sample_points = []
+
+	var start_position =  Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
+
+	# Generate first point randomly
+	while (not _check_placeable2(start_position) or (start_position - position).length() < 10):
+		start_position = Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
+									
+		
+	random_placer.place_professor(start_position*CellSize + CellSize/2)
