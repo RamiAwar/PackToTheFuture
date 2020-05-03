@@ -1,0 +1,11 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Environment/House2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Environment/House4.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Environment/House3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Environment/House1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Environment/HouseSpawner.gd" type="Script" id=5]
+
+[node name="HouseSpawner" type="Node2D"]
+script = ExtResource( 5 )
+packed_scenes = [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 2 ) ]

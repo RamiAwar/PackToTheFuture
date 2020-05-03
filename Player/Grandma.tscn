@@ -6,7 +6,7 @@
 [ext_resource path="res://Player/SlipperGun.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Boxes/Hurtbox.tscn" type="PackedScene" id=5]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=44]
 radius = 2.23157
 height = 10.7571
 
@@ -202,7 +202,7 @@ node_connections = [ "output", 0, "Speed", "Speed", 0, "MoveUp" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=41]
 
-[sub_resource type="AnimationNodeStateMachine" id=4]
+[sub_resource type="AnimationNodeStateMachine" id=45]
 states/IdleDown/node = SubResource( 21 )
 states/IdleDown/position = Vector2( -55, 37.72 )
 states/IdleUp/node = SubResource( 35 )
@@ -215,7 +215,7 @@ transitions = [ "IdleDown", "MoveUp", SubResource( 28 ), "MoveUp", "IdleDown", S
 start_node = "IdleDown"
 graph_offset = Vector2( -318, -36 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=46]
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 11.4393
@@ -237,17 +237,17 @@ texture = ExtResource( 1 )
 centered = false
 offset = Vector2( -16, -32 )
 hframes = 24
-frame = 7
+frame = 19
 
 [node name="SlipperGun" parent="." instance=ExtResource( 4 )]
-position = Vector2( -3.8895, -4.67464 )
+position = Vector2( -4.28247, -5.44042 )
 rotation = -0.267035
 scale = Vector2( 0.8, 0.8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.0987473, -2.20247 )
 rotation = -1.5708
-shape = SubResource( 1 )
+shape = SubResource( 44 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/IdleDown = SubResource( 8 )
@@ -256,9 +256,9 @@ anims/MoveDown = SubResource( 9 )
 anims/MoveUp = SubResource( 10 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 4 )
+tree_root = SubResource( 45 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 5 )
+parameters/playback = SubResource( 46 )
 parameters/IdleDown/Speed/scale = 1.0
 parameters/IdleUp/Speed/scale = 1.0
 parameters/MoveDown/Speed/scale = 1.0

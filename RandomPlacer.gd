@@ -1,22 +1,24 @@
 extends Node2D
 
-export (PackedScene) var houseA
-export (PackedScene) var foodA
+
+
 export (PackedScene) var treeA
 export (PackedScene) var Bush
 export (PackedScene) var Shrub
 export (PackedScene) var Professor
 
+
 func place_house(location):
-	var house = houseA.instance()
+	var house = HouseSpawner.get_random_scene().instance()
 	house.global_position = location
 	add_child(house)
 	house.add_to_group("world")
 	
 func place_food(location):
-	var food = foodA.instance()
-	food.global_position = location
-	add_child(food)
+#	var food = FoodSpawner.instance()
+#	food.global_position = location
+#	add_child(food)
+	pass
 	
 func place_tree(location):
 	var tree = treeA.instance()
@@ -40,3 +42,9 @@ func place_professor(location):
 	professor.global_position = location
 	add_child(professor)
 	professor.add_to_group("enemy")
+
+func place_infected(location):
+	var infected = InfectedSpawner.get_random_scene().instance()
+	infected.global_position = location
+	add_child(infected)
+	infected.add_to_group("enemy")

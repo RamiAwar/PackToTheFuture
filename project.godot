@@ -33,6 +33,8 @@ Random="*res://Utils/Random.tscn"
 ProceduralGeneration="*res://Environment/ProceduralGeneration.tscn"
 Globals="*res://Globals.tscn"
 GameManager="*res://GameManager.tscn"
+HouseSpawner="*res://Environment/HouseSpawner.tscn"
+InfectedSpawner="*res://NPCs/InfectedSpawner.tscn"
 
 [display]
 

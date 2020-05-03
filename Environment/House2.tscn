@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Environment/house4.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.8829, 21.5191 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 30.5268, 21.7147 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 7.18841, 21.4074 )
+
+[node name="House2" type="StaticBody2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 6.99479e-06, 178 )
+scale = Vector2( 1.18627, 1.18627 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -48, -245.578 )
+
+[node name="GroceryBarrier" type="CollisionShape2D" parent="."]
+position = Vector2( 23.3105, -21.9947 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -18.1391, -22.2006 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 41.8253, -21.9663 )
+shape = SubResource( 3 )

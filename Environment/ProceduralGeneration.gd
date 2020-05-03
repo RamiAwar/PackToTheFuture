@@ -248,6 +248,8 @@ func _post_processing():
 	
 	
 	size = 8
+	# Remove main house
+	house_locations.pop_front()
 	for location in house_locations:
 		house_top_left = _place_house(location, size);
 		# Set house	
@@ -275,8 +277,12 @@ func _post_processing():
 	# Place trees
 	_generate_item("place_tree", Tiles.tree, 6, 35)
 	_generate_item("place_bush", Tiles.bush, 4, 35)
-	_generate_item("place_shrub", Tiles.shrub, 3, 40)
-	_generate_item("place_flower", Tiles.flower, 3, 40, false)
+	_generate_item("place_shrub", Tiles.shrub, 3, 120)
+	_generate_item("place_flower", Tiles.flower, 4, 200, false)
+	_generate_item("place_flower", Tiles.flower, 4, 200, false)
+	_generate_item("place_flower", Tiles.flower, 4, 200, false)
+	
+	_generate_ai("place_infected", 10, 30)
 	
 	
 	# Foreground tile placement:
@@ -451,6 +457,7 @@ func _find_best_fit(size:int, position:Vector2):
 	return top_left
 	
 func _place_house(position, size):
+	
 	# Clear tiles for house
 	var top_left = _find_best_fit(size, position)
 	for x in size:
@@ -484,6 +491,19 @@ func _check_placeable(z):
 			placeable = false
 	return placeable
 	
+func _check_placeable2(z):
+	var x = z.x
+	var y = z.y
+	
+	var placeable = true
+	if x <= 0 or y <= 0 or x >= WIDTH-1 or y >= HEIGHT-1:
+		return false
+		
+	if grid[x][y] != Tiles.floor and grid[x][y] != Tiles.dirt:
+		placeable = false
+	
+	return placeable
+	
 func _generate_random_point_around(point, min_dist):
 	var r1 = Random.rng.randf()
 	var r2 = Random.rng.randf()
@@ -502,18 +522,19 @@ func _in_neighborhood(new_point, min_dist, item):
 func _generate_item(method, item, min_dist, n_points, use_random_placer=true):
 
 	var queue = []
-#	var sample_points = []
-	var start_position =  Vector2(Random.rng.randi()%(WIDTH-2) + 1,
-									Random.rng.randi()%(HEIGHT-2) + 1)
-	
+	var sample_points = []
+
+	var start_position =  Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
+
 	# Generate first point randomly
 	while !_check_placeable(start_position):
-		start_position = Vector2(Random.rng.randi()%(WIDTH-2) + 1,
-									Random.rng.randi()%(HEIGHT-2) + 1)
+		start_position = Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
 									
 	# Guaranteed placeable point
 	queue.append(start_position)
-#	sample_points.append(start_position)
+	sample_points.append(start_position)
 	grid[start_position.x][start_position.y] = item
 	
 	while not queue.empty():
@@ -529,7 +550,7 @@ func _generate_item(method, item, min_dist, n_points, use_random_placer=true):
 			# Check that point is in grid and placeable
 			if(_check_placeable(new_point) and not _in_neighborhood(new_point, min_dist, item)):
 				queue.append(new_point);
-#				sample_points.append(new_point);
+				sample_points.append(new_point);
 				for x in range(5):
 					for y in range(5):
 						if new_point.x + x > 0 and new_point.x + x < WIDTH-1 and new_point.y + y > 0 and new_point.y + y < HEIGHT-1:
@@ -537,6 +558,57 @@ func _generate_item(method, item, min_dist, n_points, use_random_placer=true):
 								grid[new_point.x + x - 2][new_point.y + y - 2] = Tiles.floor
 								
 				grid[new_point.x][new_point.y] = item
+				
+				if use_random_placer:
+					random_placer.call(method, new_point*CellSize + CellSize/2)
+	
+	
+	
+	
+func _in_neighborhood2(new_point, min_dist, points):
+	
+	for point in points:
+		if (new_point - point).length() < min_dist:
+			return true
+	
+	return false
+	
+	
+	
+	
+	
+	
+func _generate_ai(method, min_dist, n_points, use_random_placer=true):
+
+	var queue = []
+	var sample_points = []
+
+	var start_position =  Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
+
+	# Generate first point randomly
+	while !_check_placeable2(start_position):
+		start_position = Vector2( int((Random.rng.randf()*2 - 1)*(WIDTH/4) + WIDTH/2),
+									int((Random.rng.randf()*2 - 1)*(HEIGHT/4) + HEIGHT/2))
+									
+	# Guaranteed placeable point
+	queue.append(start_position)
+	sample_points.append(start_position)
+	
+	while not queue.empty():
+		
+		# Select random element
+		var random_index = Random.rng.randi()%queue.size()
+		var point = queue[random_index]
+		queue.remove(random_index)
+		
+		for i in range(n_points):
+			var new_point = _generate_random_point_around(point, min_dist);
+			
+			# Check that point is in grid and placeable
+			if(_check_placeable(new_point) and not _in_neighborhood2(new_point, min_dist, sample_points)):
+				queue.append(new_point);
+				sample_points.append(new_point);				
 				
 				if use_random_placer:
 					random_placer.call(method, new_point*CellSize + CellSize/2)
