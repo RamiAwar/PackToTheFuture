@@ -125,7 +125,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="TileSet" id=16]
+[sub_resource type="TileSet" id=15]
 0/name = "empty32.png 0"
 0/texture = ExtResource( 19 )
 0/tex_offset = Vector2( 0, 0 )
@@ -192,7 +192,7 @@ format = 1
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="InvisibleTileMap" type="TileMap" parent="Navigation2D"]
-tile_set = SubResource( 16 )
+tile_set = SubResource( 15 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
@@ -280,7 +280,7 @@ position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 8, 8 )
+zoom = Vector2( 1.4, 1.4 )
 limit_left = 0
 limit_top = 0
 limit_right = 2048

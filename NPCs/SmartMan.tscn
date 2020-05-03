@@ -12,7 +12,7 @@
 radius = 4.60988
 height = 6.95673
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "WalkDown"
 length = 0.9
 loop = true
@@ -29,8 +29,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 6, 7, 8, 0 ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "WalkUp"
+[sub_resource type="Animation" id=3]
 length = 0.9
 loop = true
 tracks/0/type = "value"
@@ -96,6 +95,7 @@ height = 9.27637
 [node name="SmartMan" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 7 )
+speed = 70
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -12 )
@@ -109,8 +109,8 @@ rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/WalkDown = SubResource( 3 )
-anims/WalkUp = SubResource( 2 )
+anims/WalkDown = SubResource( 2 )
+anims/WalkUp = SubResource( 3 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 9 )

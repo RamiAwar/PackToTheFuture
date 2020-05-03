@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 #const EnemyDeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
-var speed = 50 ################## NEW
+export var speed = 50 ################## NEW
 var path = PoolVector2Array() setget set_path ################ NEW
 func set_path(value : PoolVector2Array): ########
 	path = value #########
