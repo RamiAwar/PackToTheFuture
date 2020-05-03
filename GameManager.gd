@@ -18,6 +18,10 @@ func end_day():
 	$BossSpawn.stop()
 	ProceduralGeneration._reset();
 
+func end_life():
+	$BossSpawn.stop()
+	ProceduralGeneration._reset();
+
 func get_arrow():
 	if has_groceries:
 		return house_position

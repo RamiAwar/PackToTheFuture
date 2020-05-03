@@ -225,3 +225,8 @@ func _on_GoalHurtbox_area_entered(area):
 	if groceries:
 		_reset()
 		GameManager.end_day()
+
+
+func _on_GranHurtbox_area_entered(area):
+	print("you lose")
+	GameManager.end_life()
