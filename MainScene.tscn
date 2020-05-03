@@ -26,7 +26,7 @@
 [ext_resource path="res://Environment/Shrub.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Environment/flowers.png" type="Texture" id=25]
 
-[sub_resource type="TileSet" id=4]
+[sub_resource type="TileSet" id=1]
 0/name = "flowers.png 0"
 0/texture = ExtResource( 25 )
 0/tex_offset = Vector2( 0, 0 )
@@ -51,7 +51,7 @@
 0/shapes = [  ]
 0/z_index = 0
 
-[sub_resource type="TileSet" id=1]
+[sub_resource type="TileSet" id=2]
 0/name = "debug_tile.png 0"
 0/texture = ExtResource( 15 )
 0/tex_offset = Vector2( 0, 0 )
@@ -129,7 +129,7 @@ script = ExtResource( 7 )
 walker_destroy_chance = 0.415
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 1024, 1023.14 )
+position = Vector2( 1024, 1024 )
 texture = ExtResource( 6 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 2048, 2048 )
@@ -150,14 +150,14 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="FlowerTileMap" type="TileMap" parent="."]
-tile_set = SubResource( 3 )
+tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
 [node name="DebugTileMap" type="TileMap" parent="." groups=[
 "world",
 ]]
-tile_set = SubResource( 4 )
+tile_set = SubResource( 2 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
