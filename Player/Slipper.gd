@@ -4,6 +4,9 @@ var bullet_velocity = Vector2.ZERO
 var grounded = false
 var gravity = false
 var shadow_velocity = Vector2.ZERO
+onready var collisionShape2D = $CollisionShape2D
+onready var hitBoxCollision = $Body/Hitbox/CollisionShape2D
+onready var animationPlayer = $AnimationPlayer
 
 
 export (int) var MAX_SPEED = 300;
@@ -14,7 +17,7 @@ export (int) var minimum_velocity_threshold = 5
 func _ready():
 	#call_deferred("set_process", false)
 	SoundManager.get_node("Objects/Slipper/SlipperRandom").play(true)
-	pass
+#	$Body/Hitbox.collided = collided
 	
 	
 func initialize(direction, jump_velocity):
@@ -31,11 +34,15 @@ func _physics_process(delta):
 		var collision =  move_and_collide(bullet_velocity*delta)
 		#position += bullet_velocity*delta;
 		if collision:
-			$AnimationPlayer.stop()
+			collisionShape2D.disabled = true
+			hitBoxCollision.disabled = true
+			animationPlayer.stop()
 			bullet_velocity = Vector2.DOWN
 			gravity = true
 			if collision.collider.is_in_group("world"):
 				SoundManager.get_node("Objects/Wall/WallRandom").play()
+		else:
+			$Body/Hitbox.hit_center = $Body.global_position
 	else:
 		$Body.position += bullet_velocity;
 		if $Body.position.y >= $Shadow.position.y - 4:
@@ -43,6 +50,12 @@ func _physics_process(delta):
 			set_physics_process(false)
 			
 
+func collided():
+	collisionShape2D.set_deferred("disabled", true)
+	hitBoxCollision.set_deferred("disabled", true)
+	animationPlayer.stop()
+	bullet_velocity = Vector2.DOWN
+	gravity = true
 	
 func apply_gravity(delta):
 
@@ -67,4 +80,5 @@ func _on_Hurtbox_area_entered(area):
 	SoundManager.get_node("Objects/Coin/CoinRandom").play();
 	queue_free();
 
-
+func _on_Hitbox_area_entered(area):
+	collided()

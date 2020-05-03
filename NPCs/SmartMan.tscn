@@ -121,6 +121,7 @@ parameters/Walk/blend_position = Vector2( -0.0012092, 0 )
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 6 )]
 
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+position = Vector2( -0.552078, -0.36805 )
 shape = SubResource( 11 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 1 )]
@@ -132,7 +133,6 @@ position = Vector2( 0, -7 )
 shape = SubResource( 12 )
 
 [node name="Hurtbox" parent="." instance=ExtResource( 3 )]
-visible = false
 collision_layer = 16
 collision_mask = 0
 
@@ -148,6 +148,7 @@ shape = SubResource( 14 )
 
 [node name="WanderController" parent="." instance=ExtResource( 5 )]
 wander_range = 70
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 
 [editable path="PlayerDetectionZone"]
 

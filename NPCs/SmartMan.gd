@@ -82,6 +82,7 @@ func accelerate_towards(point, delta):
 		var distance_to_next = start_point.distance_to(path[0])
 		if distance <= distance_to_next and distance >= 0.0:
 			position = start_point.linear_interpolate(path[0], distance / distance_to_next)
+			position += knockback
 			break
 		elif distance < 0.0:
 			position = path[0]
@@ -92,8 +93,8 @@ func accelerate_towards(point, delta):
 		path.remove(0)
 	if (start_point - position).y <= 0:  animationPlayer.play("WalkDown")
 	else: animationPlayer.play("WalkUp")
-	if (start_point - position).x <= 0:  scale.x =-1
-	else: scale.x = 1
+	if (start_point - position).x <= 0: $Sprite.flip_h = false
+	else: $Sprite.flip_h = true
 	
 #	animationTree.set("parameters/Walk/blend_position", velocity.normalized())
 #	sprite.flip_h = velocity.x < 0
@@ -113,7 +114,13 @@ func pick_random_state(state_list):
 
 func _on_Hurtbox_area_entered(area):
 #	stats.health -= area.damage
-	knockback = area.knockback_vector*120
+#
+#	$Body/Hitbox/CollisionShape2D.disabled = true
+#	$AnimationPlayer.stop()
+#	bullet_velocity = Vector2.DOWN
+#	gravity = true
+#	print(area.get_tree().root)
+	knockback = -(area.hit_center - global_position).normalized()*15
 	hurtbox.create_hit_effect()
 
 
