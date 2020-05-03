@@ -69,7 +69,7 @@ func _physics_process(delta):
 
 	if softCollision.is_colliding():
 		velocity += softCollision.get_push_vector() * delta * 400
-	velocity = move_and_slide(velocity)
+#	velocity = move_and_slide(velocity)
 
 func accelerate_towards(point, delta):
 #	var direction = global_position.direction_to(point)
@@ -90,8 +90,11 @@ func accelerate_towards(point, delta):
 		distance -= distance_to_next
 		start_point = path[0]
 		path.remove(0)
-	if velocity.y > 0:  animationPlayer.play("WalkDown")
+	if (start_point - position).y <= 0:  animationPlayer.play("WalkDown")
 	else: animationPlayer.play("WalkUp")
+	if (start_point - position).x <= 0:  scale.x =-1
+	else: scale.x = 1
+	
 #	animationTree.set("parameters/Walk/blend_position", velocity.normalized())
 #	sprite.flip_h = velocity.x < 0
 
