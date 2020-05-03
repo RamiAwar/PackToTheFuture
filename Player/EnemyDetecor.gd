@@ -13,4 +13,3 @@ func _on_EnemyDetecor_body_entered(body):
 func _on_EnemyDetecor_body_exited(body):
 #	enemy = body
 	GameManager.detected_enemies -= 1
-	print(GameManager.detected_enemies)

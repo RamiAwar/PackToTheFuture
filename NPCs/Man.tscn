@@ -149,7 +149,7 @@ rotation = -1.5708
 shape = SubResource( 14 )
 
 [node name="WanderController" parent="." instance=ExtResource( 5 )]
-wander_range = 70
+wander_range = 130
 
 [node name="Stats" parent="." instance=ExtResource( 8 )]
 max_health = 2

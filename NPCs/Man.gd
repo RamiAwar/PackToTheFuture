@@ -78,8 +78,11 @@ func seek_player():
 func update_wander():
 	state = pick_random_state([IDLE, WANDER])
 #	state = WANDER
-	wanderController.start_wander_timer(rand_range(1,3))
-		
+	if state == WANDER:
+		wanderController.start_wander_timer(rand_range(1,3))
+	else: 
+		wanderController.start_wander_timer(rand_range(0,1))
+
 func pick_random_state(state_list):
 	state_list.shuffle()
 	return state_list.pop_front()
