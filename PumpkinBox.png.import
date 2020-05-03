@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/kid.png-8cf1f748a38e3a378ea6f9f70f231bae.stex"
+path="res://.import/PumpkinBox.png-cc7715bad7bbae8e966d2e87781a1dec.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://NPCs/kid.png"
-dest_files=[ "res://.import/kid.png-8cf1f748a38e3a378ea6f9f70f231bae.stex" ]
+source_file="res://PumpkinBox.png"
+dest_files=[ "res://.import/PumpkinBox.png-cc7715bad7bbae8e966d2e87781a1dec.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

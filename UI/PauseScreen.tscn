@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Environment/logo.png" type="Texture" id=1]
+[ext_resource path="res://UI/logo.png" type="Texture" id=1]
 [ext_resource path="res://UI/PauseScreen.gd" type="Script" id=2]
 [ext_resource path="res://UI/Button.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Utils/PixelFont.tres" type="DynamicFont" id=4]
@@ -17,7 +17,7 @@ __meta__ = {
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 320.0
 margin_bottom = 184.0
-color = Color( 0, 0, 0, 0.345098 )
+color = Color( 1, 0.929412, 0.839216, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 320.0
@@ -34,13 +34,13 @@ __meta__ = {
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 300.0
-margin_bottom = 164.0
+margin_bottom = 176.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer"]
 margin_left = 35.0
-margin_top = 11.0
+margin_top = 12.0
 margin_right = 245.0
-margin_bottom = 133.0
+margin_bottom = 144.0
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer/VBoxContainer"]
 margin_right = 210.0
@@ -53,8 +53,20 @@ margin_bottom = 98.0
 custom_fonts/font = ExtResource( 4 )
 
 [node name="Label" parent="MarginContainer/CenterContainer/VBoxContainer/Resume" index="0"]
+custom_colors/font_color = Color( 0.631373, 0.490196, 0.360784, 1 )
+custom_colors/font_color_shadow = Color( 0.87451, 0.8, 0.615686, 1 )
 text = "Resume"
-align = 1
+valign = 1
+
+[node name="Quit" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 102.0
+margin_bottom = 132.0
+custom_fonts/font = ExtResource( 4 )
+
+[node name="Label" parent="MarginContainer/CenterContainer/VBoxContainer/Quit" index="0"]
+custom_colors/font_color = Color( 0.631373, 0.490196, 0.360784, 1 )
+custom_colors/font_color_shadow = Color( 0.87451, 0.8, 0.615686, 1 )
+text = "Quit"
 valign = 1
 
 [node name="Button" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
@@ -65,9 +77,10 @@ margin_bottom = 122.0
 text = "Resume"
 
 [node name="Button2" type="Button" parent="MarginContainer/CenterContainer/VBoxContainer"]
-margin_top = 102.0
+visible = false
+margin_top = 136.0
 margin_right = 210.0
-margin_bottom = 122.0
+margin_bottom = 156.0
 text = "Quit"
 
 [node name="Button4" parent="MarginContainer/CenterContainer/VBoxContainer" instance=ExtResource( 3 )]
@@ -75,7 +88,9 @@ visible = false
 margin_top = 116.0
 margin_bottom = 146.0
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="MarginContainer/CenterContainer/VBoxContainer/Button2" to="." method="_on_Button2_pressed"]
 
 [editable path="MarginContainer/CenterContainer/VBoxContainer/Resume"]
+
+[editable path="MarginContainer/CenterContainer/VBoxContainer/Quit"]

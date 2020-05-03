@@ -95,7 +95,7 @@ height = 9.27637
 [node name="SmartMan" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 7 )
-speed = 70
+speed = 90
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -12 )

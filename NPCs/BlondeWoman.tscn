@@ -159,8 +159,8 @@ wander_range = 70
 [node name="Stats" parent="." instance=ExtResource( 8 )]
 max_health = 2
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
-[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 [connection signal="no_health" from="Stats" to="Speech" method="set_angry"]
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]
 
 [editable path="PlayerDetectionZone"]
 

@@ -2,7 +2,7 @@ extends Control
 
 #onready var button1 = $MarginContainer/CenterContainer/VBoxContainer/Button
 onready var resumebtn = $MarginContainer/CenterContainer/VBoxContainer/Resume
-onready var button2 = $MarginContainer/CenterContainer/VBoxContainer/Button2
+onready var button2 = $MarginContainer/CenterContainer/VBoxContainer/Quit
 
 func _ready():
 	visible = false
@@ -38,3 +38,7 @@ func _on_Button2_pressed():
 func _on_Resume_pressed():
 	get_tree().paused = false
 	visible = false
+
+
+func _on_Quit_pressed():
+	get_tree().quit()
