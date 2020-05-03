@@ -20,7 +20,7 @@ var transition_controller : ColorRect
 var random_placer : YSort
 
 
-
+var day_label: Label
 
 
 func initialize():

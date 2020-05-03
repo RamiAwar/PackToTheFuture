@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://Utils/Joystick/pressed_roll.png" type="Texture" id=1]
 [ext_resource path="res://Utils/Joystick/unpressed_roll.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://Environment/Bush.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Environment/Shrub.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Environment/flowers.png" type="Texture" id=25]
+[ext_resource path="res://Utils/PixelFont.tres" type="DynamicFont" id=26]
 
 [sub_resource type="NavigationPolygon" id=4]
 vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -124,7 +125,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="TileSet" id=3]
+[sub_resource type="TileSet" id=16]
 0/name = "empty32.png 0"
 0/texture = ExtResource( 19 )
 0/tex_offset = Vector2( 0, 0 )
@@ -191,10 +192,8 @@ format = 1
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="InvisibleTileMap" type="TileMap" parent="Navigation2D"]
-tile_set = SubResource( 3 )
-cell_size = Vector2( 32, 32 )
+tile_set = SubResource( 16 )
 format = 1
-tile_data = PoolIntArray( 131065, 1, 0, 131066, 1, 0, 131067, 1, 0, 131068, 1, 0, 131069, 1, 0, 131070, 1, 0, 196607, 1, 0, 131072, 1, 0, 131073, 1, 0, 131074, 1, 0, 131075, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 131079, 1, 0, 131080, 1, 0, 131081, 1, 0, 131082, 1, 0, 196619, 1, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 1, 0, 196624, 1, 0, 196625, 1, 0, 196626, 1, 0, 196627, 1, 0, 196628, 1, 0, 196629, 1, 0, 196630, 1, 0, 262167, 1, 0, 262168, 1, 0, 262169, 1, 0, 262170, 1, 0, 262171, 1, 0, 262172, 1, 0, 262173, 1, 0, 262174, 1, 0, 262175, 1, 0, 262176, 1, 0, 262177, 1, 0, 262178, 1, 0, 327715, 1, 0, 327716, 1, 0, 327717, 1, 0, 327718, 1, 0, 327719, 1, 0, 327720, 1, 0, 327721, 1, 0, 327722, 1, 0, 327723, 1, 0, 327724, 1, 0, 327725, 1, 0, 327726, 1, 0, 393263, 1, 0, 393264, 1, 0, 393265, 1, 0, 393266, 1, 0, 393267, 1, 0, 393268, 1, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -229,6 +228,36 @@ visible = false
 [node name="TransitionController" parent="CanvasLayer" instance=ExtResource( 21 )]
 
 [node name="HoardTime" parent="CanvasLayer" instance=ExtResource( 14 )]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 224.0
+margin_top = 8.0
+margin_right = 272.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 26 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "Day"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Day" type="Label" parent="CanvasLayer"]
+margin_left = 280.0
+margin_top = 8.0
+margin_right = 312.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 26 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+text = "15"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="YSort" type="YSort" parent="."]
 

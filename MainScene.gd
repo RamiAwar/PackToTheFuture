@@ -47,8 +47,7 @@ func _ready():
 	GameManager.nav_2d = $Navigation2D
 	GameManager.random_placer = $YSort/RandomPlacer
 	
-	
-	
+	GameManager.day_label = $CanvasLayer/Day
 	
 func _input(event):
 
