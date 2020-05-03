@@ -32,7 +32,10 @@ func _physics_process(delta):
 	update()
 
 	if target.x < 0:
-		scale.x = -1
+#		scale.x = -1
+		
+		show_behind_parent = false
+		
 #		$Sprite/Sprite2.flip_h = true
 #		$Sprite/Sprite2.rotation_degrees = -75
 #		$Sprite/Sprite2.position.x = -11.6*$Sprite/Sprite2.scale.x
@@ -45,7 +48,8 @@ func _physics_process(delta):
 		rotation = -angle
 
 	else:
-		scale.x = 1
+
+		show_behind_parent = true
 #		$Sprite/Sprite2.rotation_degrees = 65.8
 #		$Sprite/Sprite2.position.x = 11.6*$Sprite/Sprite2.scale.x
 #		$Sprite/Sprite2.flip_h = false
@@ -70,7 +74,7 @@ func IdleState():
 	if Input.is_action_just_pressed("attack"):
 		gun_state = states.SHOOT
 		animation_state.travel("Shoot");
-		$Emitter.trigger(angle)
+		$Emitter.trigger()
 
 func ShootState():
 	

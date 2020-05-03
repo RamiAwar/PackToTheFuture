@@ -5,8 +5,8 @@
 [ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=4]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 9.24449
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.42398
 
 [sub_resource type="Animation" id=2]
 length = 0.4
@@ -24,8 +24,9 @@ tracks/0/keys = {
 "values": [ 0.0, -360.0 ]
 }
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 2.4029
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 2.032
+height = 11.4399
 
 [node name="Slipper" type="KinematicBody2D"]
 position = Vector2( 0, -11.8085 )
@@ -39,17 +40,18 @@ scale = Vector2( 1.23617, 1.23617 )
 texture = ExtResource( 4 )
 
 [node name="Body" type="Sprite" parent="."]
-rotation = -1.5708
+rotation = -0.800929
+scale = Vector2( 1.25, 1.25 )
 texture = ExtResource( 1 )
-offset = Vector2( -0.56, -1.402 )
+offset = Vector2( -0.013, 1.221 )
 
 [node name="Hitbox" parent="Body" instance=ExtResource( 3 )]
 rotation = -2.0944
 collision_mask = 16
 
 [node name="CollisionShape2D" parent="Body/Hitbox" index="0"]
-position = Vector2( -0.710114, 0.108156 )
-shape = SubResource( 1 )
+position = Vector2( 0.0719454, 0.203173 )
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/airborne = SubResource( 2 )

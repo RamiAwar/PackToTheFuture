@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Sound/assets/Whoosh-master.wav" type="AudioStream" id=1]
 [ext_resource path="res://Sound/SoundManager.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Sound/RandomSound.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Sound/assets/boomerang_effect_2.wav" type="AudioStream" id=12]
 [ext_resource path="res://Sound/assets/slap.wav" type="AudioStream" id=13]
+[ext_resource path="res://Sound/assets/scooby_laugh.wav" type="AudioStream" id=14]
 
 [node name="SoundManager" type="Node"]
 pause_mode = 2
@@ -31,6 +32,10 @@ stream = ExtResource( 3 )
 
 [node name="BatDeath" type="AudioStreamPlayer" parent="Enemies"]
 stream = ExtResource( 4 )
+
+[node name="ProfessorLaugh" type="AudioStreamPlayer" parent="Enemies"]
+pause_mode = 2
+stream = ExtResource( 14 )
 
 [node name="Objects" type="Node" parent="."]
 

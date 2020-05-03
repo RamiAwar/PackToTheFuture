@@ -20,32 +20,7 @@
 [ext_resource path="res://Environment/RandomPlacer.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Environment/empty32.png" type="Texture" id=19]
 [ext_resource path="res://NPCs/SmartMan.tscn" type="PackedScene" id=20]
-[ext_resource path="res://NPCs/Man.tscn" type="PackedScene" id=21]
-
-[sub_resource type="TileSet" id=1]
-0/name = "debug_tile.png 0"
-0/texture = ExtResource( 15 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 32, 32 )
-0/tile_mode = 1
-0/autotile/bitmask_mode = 1
-0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 33488896 ]
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 32, 32 )
-0/autotile/spacing = 0
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
+[ext_resource path="res://UI/TransitionRect.tscn" type="PackedScene" id=21]
 
 [sub_resource type="NavigationPolygon" id=2]
 vertices = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -76,9 +51,41 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="TileSet" id=1]
+0/name = "debug_tile.png 0"
+0/texture = ExtResource( 15 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 32, 32 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 1
+0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 33488896 ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 32, 32 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
 [node name="root" type="Node2D"]
 script = ExtResource( 7 )
 walker_destroy_chance = 0.415
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="InvisibleTileMap" type="TileMap" parent="Navigation2D"]
+tile_set = SubResource( 3 )
+cell_size = Vector2( 32, 32 )
+format = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 1024, 1024 )
@@ -105,13 +112,6 @@ format = 1
 "world",
 ]]
 tile_set = SubResource( 1 )
-cell_size = Vector2( 32, 32 )
-format = 1
-
-[node name="Navigation2D" type="Navigation2D" parent="."]
-
-[node name="InvisibleTileMap" type="TileMap" parent="Navigation2D"]
-tile_set = SubResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
 
@@ -145,7 +145,12 @@ visible = false
 [node name="BossScreen" parent="CanvasLayer" instance=ExtResource( 17 )]
 visible = false
 
+[node name="ColorRect" parent="CanvasLayer" instance=ExtResource( 21 )]
+
 [node name="YSort" type="YSort" parent="."]
+
+[node name="SmartMan" parent="YSort" instance=ExtResource( 20 )]
+position = Vector2( 312, 224 )
 
 [node name="RandomPlacer" parent="YSort" instance=ExtResource( 18 )]
 houseA = ExtResource( 12 )
@@ -160,15 +165,12 @@ foodA = ExtResource( 14 )
 ] instance=ExtResource( 13 )]
 position = Vector2( 96, 0 )
 
-[node name="SmartMan" parent="YSort" instance=ExtResource( 20 )]
-position = Vector2( 211.771, 149.054 )
-
 [node name="Grandma" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( 56, 56 )
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Grandma"]
 current = true
-zoom = Vector2( 5, 5 )
+zoom = Vector2( 1.3, 1.3 )
 limit_left = 0
 limit_top = 0
 limit_right = 2048

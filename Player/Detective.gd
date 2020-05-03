@@ -58,8 +58,9 @@ func _ready():
 
 		
 	# Modify animation speed snippet
-	#animation_tree.set("parameters/Attack/Speed/scale", 2.0)
-	#animation_tree.set("parameters/Roll/Speed/scale", 1.0)
+	animation_tree.set("parameters/Idle/Speed/scale", 1.0)
+	animation_tree.set("parameters/MoveUp/Speed/scale", 1.4)
+	animation_tree.set("parameters/MoveDown/Speed/scale", 1.4)
 	
 	UpdateBlendSpaces() # To make all blend spaces face same direction on startup
 	
@@ -96,6 +97,8 @@ func _physics_process(delta):
 	GameManager.granny_position = global_position
 
 
+	
+
 func MoveState(delta):
 	
 	if input_vector != Vector2.ZERO:	
@@ -107,11 +110,15 @@ func MoveState(delta):
 		player_velocity = player_velocity.move_toward(input_vector.normalized() * MAX_VELOCITY, ACCELERATION * delta)	
 		last_input = input_vector
 		
-#		if input_vector.x < 0:
-#			$Sprite.flip_h = true
-#
-#		else:
-#			$Sprite.flip_h = false
+		if input_vector.x < 0:
+			$Sprite.flip_h = true
+		else:
+			$Sprite.flip_h = false
+			
+		if input_vector.y < 0:
+			animation_state.travel("MoveUp");
+		else: 
+			animation_state.travel("MoveDown");
 		
 		# Time delay before starting to animate
 #		if player_velocity.length() > 20:
@@ -129,7 +136,10 @@ func MoveState(delta):
 	else:	
 		# Steer player velocity to zero with stopping friction
 		player_velocity = player_velocity.move_toward(Vector2.ZERO, FRICTION*delta)
-		animation_state.travel("Idle")
+		
+		if last_input.x < 0:
+			animation_state.travel("IdleUp")
+			animation_state.travel("IdleDown")
 		
 #	if !OS_MOBILE and Input.is_action_just_pressed("mouse_attack"):
 #		var relative_position = get_global_mouse_position() - global_position
@@ -193,11 +203,11 @@ func _on_Hurtbox_area_entered(area):
 
 # Update animation blend tree values to get transitions
 func UpdateBlendSpaces():
-	animation_tree.set("parameters/Idle/IdleBlendSpace/blend_position", input_vector)
+#	animation_tree.set("parameters/Idle/IdleBlendSpace/blend_position", input_vector)
 #	animation_tree.set("parameters/Run/RunBlendSpace/blend_position", input_vector)
 #	animation_tree.set("parameters/Attack/AttackBlendSpace/blend_position", input_vector)
 #	animation_tree.set("parameters/Roll/RollBlendSpace/blend_position", input_vector)
-
+	pass
 
 func _on_GroceryHurtbox_area_entered(area):
 	groceries = true

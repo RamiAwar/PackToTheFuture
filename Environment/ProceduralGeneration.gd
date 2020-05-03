@@ -87,6 +87,7 @@ func _reset():
 	wall_tilemap.clear()
 	dirt_tilemap.clear()
 	debug_tilemap.clear()
+	invisible_tilemap.clear()
 	
 	house_locations = []
 	for n in random_placer.get_children():
