@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://UI/vignette.png" type="Texture" id=1]
 [ext_resource path="res://UI/GreenVignette.gd" type="Script" id=2]
@@ -19,9 +19,28 @@ void fragment(){
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/cutoff = 0.299
+shader_param/cutoff = 0.534
 shader_param/smooth_size = 0.38
 shader_param/mask = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "greenin"
+
+[sub_resource type="Animation" id=4]
+resource_name = "greenout"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.259, 0.534 ]
+}
 
 [node name="ColorRect" type="ColorRect"]
 material = SubResource( 2 )
@@ -32,3 +51,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/greenin = SubResource( 3 )
+anims/greenout = SubResource( 4 )
