@@ -96,6 +96,7 @@ func _reset():
 	dirt_tilemap.clear()
 	debug_tilemap.clear()
 	invisible_tilemap.clear()
+	flower_tilemap.clear()
 	
 	house_locations = []
 	for n in random_placer.get_children():
@@ -307,7 +308,7 @@ func _post_processing():
 	_generate_item("place_tree", Tiles.tree, 6, 35)
 	_generate_item("place_bush", Tiles.bush, 4, 35)
 	_generate_item("place_shrub", Tiles.shrub, 3, 40)
-	_generate_item("place_flower", Tiles.flower, 2, 40, false)
+	_generate_item("place_flower", Tiles.flower, 4, 40, false)
 	
 	
 	_remove_diagonals(Tiles.dirt)
