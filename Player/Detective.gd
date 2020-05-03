@@ -228,5 +228,6 @@ func _on_GoalHurtbox_area_entered(area):
 
 
 func _on_GranHurtbox_area_entered(area):
-	print("you lose")
 	GameManager.end_life()
+
+# 

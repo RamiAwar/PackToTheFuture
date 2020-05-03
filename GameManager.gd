@@ -5,6 +5,7 @@ export (int) var boss_minimum_spawn_wait = 5
 export (int) var boss_range_spawn_wait = 10
 var granny_position = Vector2(0, 0)
 var nav_2d = null
+var detected_enemies = 0
 
 onready var shop_position = Vector2(0, 0)
 onready var house_position = Vector2(0, 0)
