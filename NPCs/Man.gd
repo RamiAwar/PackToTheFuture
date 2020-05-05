@@ -5,8 +5,10 @@ extends KinematicBody2D
 
 export var ACCELERATION = 300
 export var MAX_SPEED = 80
-export var FRICTION = 200
+export var FRICTION = 600
 export var WANDER_TARGET_RANGE = 20
+
+var knockback_strength:int
 
 enum {
 	IDLE,
@@ -31,6 +33,7 @@ func _ready():
 #	animationTree.active = true
 	animationState.travel("Walk")
 	state = pick_random_state([WANDER])
+	knockback_strength = GameManager.knockback_strength_man
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO,FRICTION * delta)
@@ -91,8 +94,8 @@ func _on_Hurtbox_area_entered(area):
 	
 	stats.health -= area.Damage
 #	knockback = area.knockback_vector*120
-	knockback = -(area.hit_center - global_position).normalized()*120
-	hurtbox.create_hit_effect()
+	knockback = -(area.hit_center - global_position).normalized()*knockback_strength
+	#hurtbox.create_hit_effect()
 
 
 func _on_Stats_no_health():

@@ -1,7 +1,9 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[sub_resource type="DynamicFontData" id=1]
+[sub_resource type="DynamicFontData" id=2]
 font_path = "res://Utils/PressStart2P.ttf"
 
 [resource]
-font_data = SubResource( 1 )
+outline_size = 2
+outline_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+font_data = SubResource( 2 )

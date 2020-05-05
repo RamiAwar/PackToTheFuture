@@ -3,7 +3,7 @@
 [ext_resource path="res://Environment/house6.png" type="Texture" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 48.6756, 20.9636 )
+extents = Vector2( 48.6756, 27.4668 )
 
 [node name="House" type="StaticBody2D"]
 
@@ -15,5 +15,5 @@ centered = false
 offset = Vector2( -48, -234 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.147392, -6.33657 )
+position = Vector2( -0.147392, -13.044 )
 shape = SubResource( 1 )

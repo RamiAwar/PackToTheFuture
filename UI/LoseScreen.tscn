@@ -1,0 +1,150 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player/lose_grandma.png" type="Texture" id=1]
+[ext_resource path="res://UI/infected.png" type="Texture" id=2]
+[ext_resource path="res://UI/boss_back.png" type="Texture" id=3]
+[ext_resource path="res://UI/LoseScreen.gd" type="Script" id=4]
+[ext_resource path="res://UI/Button.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "idle"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect3:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, 72 ), Vector2( 32, 72 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureRect2:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 88 ), Vector2( -16, 88 ) ]
+}
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://Utils/PressStart2P.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+outline_size = 2
+outline_color = Color( 0.156863, 0.156863, 0.156863, 1 )
+font_data = SubResource( 2 )
+
+[node name="LoseScreen" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_top = -0.729973
+margin_right = 320.0
+margin_bottom = 183.27
+mouse_filter = 1
+color = Color( 0, 0, 0, 0.345098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+margin_top = 88.0
+margin_right = 390.0
+margin_bottom = 184.0
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+margin_left = 8.0
+margin_top = 72.0
+margin_right = 132.998
+margin_bottom = 197.0
+rect_rotation = -6.3
+texture = ExtResource( 1 )
+expand = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 42.2433
+margin_top = 93.8398
+margin_right = 361.243
+margin_bottom = 182.84
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 133.0
+margin_top = 49.0
+margin_bottom = -91.0
+mouse_filter = 1
+size_flags_horizontal = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 43.0
+margin_right = 143.0
+margin_bottom = 48.0
+custom_constants/separation = 4
+alignment = 1
+
+[node name="Retry" parent="CenterContainer/VBoxContainer" instance=ExtResource( 5 )]
+margin_left = -1.0
+margin_right = 99.0
+margin_bottom = 22.0
+rect_pivot_offset = Vector2( -242.294, 0 )
+custom_colors/font_color = Color( 0.854902, 0.854902, 0.854902, 1 )
+
+[node name="Quit" parent="CenterContainer/VBoxContainer" instance=ExtResource( 5 )]
+margin_left = -1.0
+margin_top = 26.0
+margin_right = 99.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( -242.294, 0 )
+custom_colors/font_color = Color( 0.811765, 0.811765, 0.811765, 1 )
+text = "Quit"
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 1 )
+
+[node name="highscore" type="Label" parent="."]
+margin_left = 6.9885
+margin_top = 7.73293
+margin_right = 134.988
+margin_bottom = 35.7329
+custom_fonts/font = SubResource( 3 )
+text = "Longest:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Retry" to="." method="_on_Retry_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]

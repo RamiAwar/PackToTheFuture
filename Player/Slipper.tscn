@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/slipper.png" type="Texture" id=1]
 [ext_resource path="res://Player/Slipper.gd" type="Script" id=2]
 [ext_resource path="res://Boxes/Hitbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Shadows/SmallShadow.png" type="Texture" id=4]
+[ext_resource path="res://Environment/Effect.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.42398
@@ -59,6 +60,11 @@ anims/airborne = SubResource( 2 )
 position = Vector2( 0.0519753, 11.7581 )
 rotation = -1.5708
 shape = SubResource( 3 )
+
+[node name="Effect" parent="." instance=ExtResource( 5 )]
+pause_mode = 2
+visible = false
+TriggerDelay = 0.03
 [connection signal="area_entered" from="Body/Hitbox" to="." method="_on_Hitbox_area_entered"]
 
 [editable path="Body/Hitbox"]

@@ -33,12 +33,15 @@ onready var hurtbox = $Hurtbox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
 
+var knockback_strength:int
+
 func _ready():
 #	state = pick_random_state([IDLE, WANDER])
 #	animationTree.active = true
 	animationState.travel("Walk")
 #	state = pick_random_state([WANDER])
 	state = pick_random_state([CHASE])
+	knockback_strength = GameManager.knockback_strength
 
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO,FRICTION * delta)
@@ -120,8 +123,8 @@ func _on_Hurtbox_area_entered(area):
 #	bullet_velocity = Vector2.DOWN
 #	gravity = true
 #	print(area.get_tree().root)
-	knockback = -(area.hit_center - global_position).normalized()*15
-	hurtbox.create_hit_effect()
+	knockback = -(area.hit_center - global_position).normalized()*knockback_strength
+#	hurtbox.create_hit_effect()
 
 
 #func _on_Stats_no_health():

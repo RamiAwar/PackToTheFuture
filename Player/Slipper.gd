@@ -44,7 +44,7 @@ func _physics_process(delta):
 				SoundManager.get_node("Objects/Wall/WallRandom").play()
 			elif collision.collider.is_in_group("leaves"):
 				SoundManager.get_node("Objects/Bush/RandomBush").play()
-			
+				
 		
 		else:
 			$Body/Hitbox.hit_center = $Body.global_position
@@ -52,11 +52,13 @@ func _physics_process(delta):
 		$Body.position += bullet_velocity;
 		if $Body.position.y >= $Shadow.position.y - 4:
 			bullet_velocity = Vector2.ZERO
+			$Effect.queue_free()
 			set_physics_process(false)
 			
 
 func collided():
 	SoundManager.get_node("Objects/Hit/RandomHit").play(false)
+	$Effect.trigger_effect(true, true, false);
 	collisionShape2D.set_deferred("disabled", true)
 	hitBoxCollision.set_deferred("disabled", true)
 	animationPlayer.stop()

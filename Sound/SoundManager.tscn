@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Sound/assets/Whoosh-master.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sound/assets/grandma_cry.wav" type="AudioStream" id=1]
 [ext_resource path="res://Sound/SoundManager.gd" type="Script" id=2]
 [ext_resource path="res://Sound/assets/Squish.wav" type="AudioStream" id=3]
 [ext_resource path="res://Sound/assets/BatDeath.wav" type="AudioStream" id=4]
@@ -23,9 +23,9 @@ script = ExtResource( 2 )
 
 [node name="Player" type="Node" parent="."]
 
-[node name="Attack" type="AudioStreamPlayer" parent="Player"]
+[node name="Cry" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource( 1 )
-volume_db = -16.0
+volume_db = -17.625
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -74,6 +74,7 @@ stream = ExtResource( 10 )
 
 [node name="RandomHit" parent="Objects/Hit" instance=ExtResource( 11 )]
 number_of_samples = 1
+volume = -9
 
 [node name="SlipperHit" type="AudioStreamPlayer" parent="Objects/Hit"]
 stream = ExtResource( 16 )
@@ -83,10 +84,11 @@ volume_db = -8.126
 
 [node name="WallRandom" parent="Objects/Wall" instance=ExtResource( 11 )]
 number_of_samples = 1
+volume = -8
 
 [node name="WallHit1" type="AudioStreamPlayer" parent="Objects/Wall"]
 stream = ExtResource( 13 )
-volume_db = -15.6
+volume_db = 24.0
 
 [node name="Bush" type="Node" parent="Objects"]
 
@@ -96,7 +98,7 @@ volume = 0
 
 [node name="Bush" type="AudioStreamPlayer" parent="Objects/Bush"]
 stream = ExtResource( 6 )
-volume_db = 3.749
+volume_db = 10.02
 
 [node name="BackgroundLoop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 15 )

@@ -4,6 +4,7 @@
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
+boss_range_spawn_wait = 5
 
 [node name="BossSpawn" type="Timer" parent="."]
 [connection signal="timeout" from="BossSpawn" to="." method="_spawn_boss"]

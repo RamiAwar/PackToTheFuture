@@ -29,11 +29,6 @@ onready var animation_state = animation_tree.get("parameters/playback")
 
 #onready var sword_hitbox = get_node("SwordPivot/SwordHitbox")
 
-onready var joystick_move: Joystick = $"../../CanvasLayer/UI/Joystick";
-onready var attack_button: TouchScreenButton = $"../../CanvasLayer/UI/Attack"
-onready var roll_button: TouchScreenButton = $"../../CanvasLayer/UI/Roll";
-
-
 enum states {
 	MOVE
 }
@@ -77,8 +72,6 @@ func _process(delta):
 		input_vector.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 		input_vector.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	# Else get virtual joystick input
-	else:	
-		input_vector = joystick_move.get_value()
 	
 	$Arrow.point_towards(GameManager.get_arrow())
 	
